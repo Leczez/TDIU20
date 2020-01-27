@@ -13,6 +13,8 @@ public:
     int get_minute() const;
     int get_second() const;
 private:
+    void throw_exception(std::string message);
+    bool check_for_invalid_input(int h, int m, int s);
     int hour{};
     int minute{};
     int second{};

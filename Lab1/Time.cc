@@ -3,61 +3,91 @@
 #include "Time.h"
 #include <stdexcept>
 #include <iostream>
-//using namespace std;
+using namespace std;
 
 
 Time::Time(int h, int m, int s):
 hour{h}, minute{m}, second{s}
 {
-    try
-    {
-        if (h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0)
+    //try
+    //{
+        if (check_for_invalid_input(h,m,s)/*h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0*/)
         {
-            throw std::invalid_argument{"invalid_input"};
             //Time();
+            //throw std::invalid_argument{"invalid_input"};
+            throw_exception("invalid_input");
         }
-    }
-    catch(std::invalid_argument)
+      //}
+    /*catch(std::invalid_argument)
     {
         std::cerr << "INVALID INPUT!" << std::endl;
     }
+    */
 }
 
 Time::Time(std::string t)
 {
-    try
-    {
+    //try
+    //{
         if (t.size() == 8 && t[2] == ':' && t[5] == ':')
         {
-            int temp_hour = stoi(t.substr(0,1));
-            int temp_minute = stoi(t.substr(3,4));
-            int temp_second = stoi(t.substr(6,7));
-            Time(temp_hour,temp_minute,temp_second);
+            hour = stoi(t.substr(0,2));
+            minute = stoi(t.substr(3,2));
+            second = stoi(t.substr(6,2));
+
+            if (check_for_invalid_input(hour,minute,second))
+            {
+              //Time();
+              //throw std::invalid_argument{"invalid_input"};
+              throw_exception("invalid_input");
+            }
         }
         else
         {
-            throw std::invalid_argument{"invalid_format"};
-            Time();
+            //Time();
+            //throw std::invalid_argument{"invalid_format"};
+            throw_exception("invalid_format");
         }
-    }
+    //}
+    /*
     catch(std::invalid_argument)
     {
         std::cerr << "INVALID FORMAT!" << std::endl;
     }
+    */
+}
 
+
+bool Time::check_for_invalid_input(int h, int m, int s)
+{
+    if(h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+void Time::throw_exception(std::string message)
+{
+    Time();
+    throw std::invalid_argument{message};
 }
 
 int Time::get_hour() const
 {
-    return hour;
+  return hour;
 }
 
 int Time::get_minute() const
 {
-    return minute;
+  return minute;
 }
 
 int Time::get_second() const
 {
-    return second;
+  return second;
 }

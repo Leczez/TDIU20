@@ -42,10 +42,11 @@ TEST_CASE ("Constructor with faulty argument")
     CHECK_THROWS( Time{0,99,0} );
     CHECK_THROWS( Time{0,0,99} );
 }
-#if 0
+
 TEST_CASE ("String constructor")
 {
     Time t{"12:23:12"};
+
     CHECK(t.get_hour() == 12);
     CHECK(t.get_minute() == 23);
     CHECK(t.get_second() == 12);
@@ -54,8 +55,9 @@ TEST_CASE ("String constructor")
     {
         CHECK_THROWS( Time{"02:11:74"} );
     }
+  
 }
-
+#if 0
 TEST_CASE ("am or pm")
 {
     Time t{12,12,31};
