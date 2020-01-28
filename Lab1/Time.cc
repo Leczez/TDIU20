@@ -3,6 +3,7 @@
 #include "Time.h"
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 
@@ -15,29 +16,28 @@ hour{h}, minute{m}, second{s}
     }
 }
 
+
 Time::Time(std::string t)
 {
-
     if (t.size() == 8 && t[2] == ':' && t[5] == ':')
     {
         hour = stoi(t.substr(0,2));
         minute = stoi(t.substr(3,2));
         second = stoi(t.substr(6,2));
+
         if (check_for_invalid_input(hour,minute,second))
         {
             throw std::invalid_argument{"invalid_input"};
         }
-
     }
     else
     {
         throw std::invalid_argument{"invalid_format"};
     }
-
 }
 
 
-bool Time::check_for_invalid_input(int h, int m, int s)
+bool Time::check_for_invalid_input(int h, int m, int s) const
 {
     if(h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0)
     {
@@ -47,9 +47,65 @@ bool Time::check_for_invalid_input(int h, int m, int s)
     {
         return false;
     }
-
 }
 
+
+bool Time::is_am() const
+{
+    if (hour < 12)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+string Time::to_string(bool am_pm_format ) const
+{
+    stringstream ss{};
+    if(am_pm_format && !is_am())
+    {
+        format_into_ostream(hour-12, ss);
+    }
+    else
+    {
+        format_into_ostream(hour, ss);
+    }
+
+    ss << ':';
+    format_into_ostream(minute, ss);
+    ss << ':';
+    format_into_ostream(second, ss);
+
+    if(am_pm_format )
+    {
+        if(hour >= 12)
+        {
+            ss << " pm";
+        }
+        else
+        {
+            ss << " am";
+        }
+    }
+    return ss.str();
+}
+
+
+void Time::format_into_ostream (int n, ostream& os) const
+{
+    if( n < 10)
+    {
+        os << 0 << n;
+    }
+    else
+    {
+        os << n;
+    }
+}
 
 int Time::get_hour() const
 {
