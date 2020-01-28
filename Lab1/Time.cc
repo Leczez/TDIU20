@@ -9,31 +9,30 @@ using namespace std;
 Time::Time(int h, int m, int s):
 hour{h}, minute{m}, second{s}
 {
-        if (check_for_invalid_input(h,m,s)/*h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0*/)
-        {
-            throw_exception("invalid_input");
-        }
-
+    if (check_for_invalid_input(h,m,s))
+    {
+        throw std::invalid_argument{"invalid_input"};
+    }
 }
 
 Time::Time(std::string t)
 {
 
-        if (t.size() == 8 && t[2] == ':' && t[5] == ':')
+    if (t.size() == 8 && t[2] == ':' && t[5] == ':')
+    {
+        hour = stoi(t.substr(0,2));
+        minute = stoi(t.substr(3,2));
+        second = stoi(t.substr(6,2));
+        if (check_for_invalid_input(hour,minute,second))
         {
-            hour = stoi(t.substr(0,2));
-            minute = stoi(t.substr(3,2));
-            second = stoi(t.substr(6,2));
+            throw std::invalid_argument{"invalid_input"};
+        }
 
-            if (check_for_invalid_input(hour,minute,second))
-            {
-              throw_exception("invalid_input");
-            }
-        }
-        else
-        {
-            throw_exception("invalid_format");
-        }
+    }
+    else
+    {
+        throw std::invalid_argument{"invalid_format"};
+    }
 
 }
 
@@ -51,23 +50,18 @@ bool Time::check_for_invalid_input(int h, int m, int s)
 
 }
 
-void Time::throw_exception(std::string message)
-{
-    Time(); //ska konstruktorn inte bara avsluta utan att skapa ett objekt?
-    throw std::invalid_argument{message};
-}
 
 int Time::get_hour() const
 {
-  return hour;
+    return hour;
 }
 
 int Time::get_minute() const
 {
-  return minute;
+    return minute;
 }
 
 int Time::get_second() const
 {
-  return second;
+    return second;
 }
