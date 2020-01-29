@@ -73,6 +73,24 @@ TEST_CASE ("Convert to string" )
     CHECK( Time{14,03,02}.to_string(true) ==    "02:03:02 pm" );
 }
 
+
+TEST_CASE ("Operator +")
+{
+    Time t{0,0,0};
+    t + 1;
+    CHECK(t.to_string() == "00:00:01");
+
+}
+
+TEST_CASE ("Operator ++")
+{
+    Time t{0,0,0};
+    t++;
+    CHECK(t.to_string() == "00:00:01");
+
+}
+
+
 TEST_CASE ("Conversion to string" )
 {
     //CHECK( string(Time{2,4,1}) == "02:04:01" ); FATTAR INTE DENNA?

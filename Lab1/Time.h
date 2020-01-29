@@ -2,7 +2,7 @@
 // som behövs
 #ifndef CARD_H
 #define CARD_H
-#include <string> 
+#include <string>
 class Time
 {
 public:
@@ -14,6 +14,8 @@ public:
     int get_second() const;
     bool is_am() const;
     std::string to_string( bool = false) const;
+    Time operator+(int N);
+    Time operator++(int);
 private:
     int hour{};
     int minute{};

@@ -107,6 +107,40 @@ void Time::format_into_ostream (int n, ostream& os) const
     }
 }
 
+Time Time::operator+(int N)
+{
+    Time temp{hour,minute,second};
+    for(int i{}; i < N;i++)
+    {
+      temp++;
+      cout << "operator+ "<< temp.hour << " " << temp.minute << " " << temp.second << endl;
+    }
+    cout << "operator2+ "<< temp.hour << " " << temp.minute << " " << temp.second << endl;
+    return temp;
+}
+
+Time Time::operator++(int)
+{
+    Time t{*this};
+    t.second++;
+    if(t.second > 59)
+    {
+        t.second = 0;
+        t.minute++;
+        if(t.minute > 59)
+        {
+            t.minute = 0;
+            t.hour++;
+            if(t.hour > 23)
+            {
+                t.hour = 0;
+              }
+        }
+    }
+    cout << "operator++ "<< t.hour << " " << t.minute << " " << t.second << endl;
+    return t;
+}
+
 int Time::get_hour() const
 {
     return hour;
