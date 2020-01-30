@@ -90,6 +90,21 @@ TEST_CASE ("Operator ++")
 
 }
 
+TEST_CASE("Operator -")
+{
+    Time t{0,0,0};
+    t = t - 3;
+    CHECK(t.to_string() == "23:59:57");
+}
+
+
+TEST_CASE("Operator --")
+{
+    Time t{0,0,0};
+    t--;
+    CHECK(t.to_string() == "23:59:59");
+}
+
 
 TEST_CASE ("Conversion to string" )
 {

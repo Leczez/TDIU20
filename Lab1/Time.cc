@@ -203,7 +203,110 @@ void Time::operator--()
     }
 }
 
+bool Time::operator==(Time & t)
+{
+    if(hour == t.hour && minute == t.minute && second == t.second)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
+bool Time::operator!=(Time & t)
+{
+    if(hour != t.hour || minute != t.minute || second != t.second)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+bool Time::operator<(Time & t)
+{
+    if(hour < t.hour)
+    {
+        return true;
+    }
+    else
+    {
+        if(hour == t.hour && minute < t.minute)
+        {
+            return true;
+        }
+        else
+        {
+            if(hour == t.hour && minute == t.minute && second < t.second)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+}
+
+bool Time::operator>(Time & t)
+{
+    if(hour > t.hour)
+    {
+        return true;
+    }
+    else
+    {
+        if(hour == t.hour && minute > t.minute)
+        {
+            return true;
+        }
+        else
+        {
+            if(hour == t.hour && minute == t.minute && second > t.second)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
+
+bool Time::operator<=(Time & t)
+{
+    Time temp{*this};
+    if(temp < t || temp == t)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+bool Time::operator>=(Time & t)
+{
+    Time temp{*this};
+    if(temp > t || temp == t)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 
 

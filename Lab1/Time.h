@@ -20,6 +20,13 @@ public:
     Time operator-(int N);
     void operator--(int);
     void operator--();
+    bool operator==(Time & t);
+    bool operator!=(Time & t);
+    bool operator<(Time & t);
+    bool operator>(Time & t);
+    bool operator<=(Time & t);
+    bool operator>=(Time & t);
+
 private:
     int hour{};
     int minute{};
