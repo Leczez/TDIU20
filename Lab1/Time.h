@@ -15,7 +15,8 @@ public:
     bool is_am() const;
     std::string to_string( bool = false) const;
     Time operator+(int N);
-    Time operator++(int);
+    void operator++(int);
+    void operator++();
 private:
     int hour{};
     int minute{};

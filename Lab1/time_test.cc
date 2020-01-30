@@ -77,8 +77,8 @@ TEST_CASE ("Convert to string" )
 TEST_CASE ("Operator +")
 {
     Time t{0,0,0};
-    t + 1;
-    CHECK(t.to_string() == "00:00:01");
+    t = t + 3;
+    CHECK(t.to_string() == "00:00:03");
 
 }
 

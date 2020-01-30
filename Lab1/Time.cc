@@ -119,26 +119,47 @@ Time Time::operator+(int N)
     return temp;
 }
 
-Time Time::operator++(int)
+void Time::operator++(int)
 {
-    Time t{*this};
-    t.second++;
-    if(t.second > 59)
+    //Time t{*this};
+    second++;
+    if(second > 59)
     {
-        t.second = 0;
-        t.minute++;
-        if(t.minute > 59)
+        second = 0;
+        minute++;
+        if(minute > 59)
         {
-            t.minute = 0;
-            t.hour++;
-            if(t.hour > 23)
+            minute = 0;
+            hour++;
+            if(hour > 23)
             {
-                t.hour = 0;
+                hour = 0;
               }
         }
     }
-    cout << "operator++ "<< t.hour << " " << t.minute << " " << t.second << endl;
-    return t;
+    cout << "operator++ "<< hour << " " << minute << " " << second << endl;
+    //return t;
+}
+void Time::operator++()
+{
+    //Time t{*this};
+    second++;
+    if(second > 59)
+    {
+        second = 0;
+        minute++;
+        if(minute > 59)
+        {
+            minute = 0;
+            hour++;
+            if(hour > 23)
+            {
+                hour = 0;
+              }
+        }
+    }
+    cout << "operator++ "<< hour << " " << minute << " " << second << endl;
+    //return t;
 }
 
 int Time::get_hour() const
