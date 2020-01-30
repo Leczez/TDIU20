@@ -3,6 +3,8 @@
 #ifndef CARD_H
 #define CARD_H
 #include <string>
+#include <iostream>
+
 class Time
 {
 public:
@@ -27,6 +29,8 @@ public:
     bool operator>(Time const& t) const;
     bool operator<=(Time const& t) const;
     bool operator>=(Time const& t) const;
+
+    std::ostream& operator<<(std::ostream& os) const;
 
 private:
     int hour{};

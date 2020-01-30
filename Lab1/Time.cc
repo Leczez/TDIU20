@@ -304,6 +304,13 @@ bool Time::operator>=(Time const& t) const
     }
 }
 
+ostream& Time::operator<<(ostream& os) const
+{
+    os << (*this).to_string();
+    return os;
+}
+
+
 Time::operator string() const
 {
     return to_string();
