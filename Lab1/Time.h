@@ -20,6 +20,7 @@ public:
     Time operator-(int N);
     Time operator--(int);
     Time& operator--();
+    operator std::string();
     bool operator==(Time & t);
     bool operator!=(Time & t);
     bool operator<(Time & t);

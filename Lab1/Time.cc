@@ -123,23 +123,9 @@ Time Time::operator+(int N)
 
 Time Time::operator++(int)
 {
-
-    second++;
-    if(second > 59)
-    {
-        second = 0;
-        minute++;
-        if(minute > 59)
-        {
-            minute = 0;
-            hour++;
-            if(hour > 23)
-            {
-                hour = 0;
-            }
-        }
-    }
-    return *this;
+    Time t{*this};
+    ++t;
+    return t;
 }
 Time& Time::operator++()
 {
@@ -173,22 +159,9 @@ Time Time::operator-(int N)
 
 Time Time::operator--(int)
 {
-    second--;
-    if(second < 0)
-    {
-        second = 59;
-        minute--;
-        if(minute < 0)
-        {
-            minute = 59;
-            hour--;
-            if(hour < 0)
-            {
-                hour = 23;
-              }
-        }
-    }
-    return *this;
+    Time t{*this};
+    --t;
+    return t;
 }
 
 Time& Time::operator--()
@@ -316,7 +289,10 @@ bool Time::operator>=(Time & t)
     }
 }
 
-
+Time::operator string()
+{
+    return to_string();
+}
 
 int Time::get_hour() const
 {
