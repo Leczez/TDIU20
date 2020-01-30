@@ -131,7 +131,7 @@ Time Time::operator+(int N)
 Time Time::operator++(int)
 {
     Time t{*this};
-    ++t;
+    ++(*this);
     return t;
 }
 Time& Time::operator++()
@@ -175,7 +175,7 @@ Time Time::operator-(int N)
 Time Time::operator--(int)
 {
     Time t{*this};
-    --t;
+    --(*this);
     return t;
 }
 
@@ -199,7 +199,7 @@ Time& Time::operator--()
     return *this;
 }
 
-bool Time::operator==(Time & t)
+bool Time::operator==(Time const& t) const
 {
     if(hour == t.hour && minute == t.minute && second == t.second)
     {
@@ -211,7 +211,7 @@ bool Time::operator==(Time & t)
     }
 }
 
-bool Time::operator!=(Time & t)
+bool Time::operator!=(Time const& t) const
 {
     if(hour != t.hour || minute != t.minute || second != t.second)
     {
@@ -224,7 +224,7 @@ bool Time::operator!=(Time & t)
 
 }
 
-bool Time::operator<(Time & t)
+bool Time::operator<(Time const& t) const
 {
     if(hour < t.hour)
     {
@@ -251,7 +251,7 @@ bool Time::operator<(Time & t)
 
 }
 
-bool Time::operator>(Time & t)
+bool Time::operator>(Time const& t) const
 {
     if(hour > t.hour)
     {
@@ -277,7 +277,7 @@ bool Time::operator>(Time & t)
     }
 }
 
-bool Time::operator<=(Time & t)
+bool Time::operator<=(Time const& t) const
 {
     Time temp{*this};
     if(temp < t || temp == t)
@@ -291,7 +291,7 @@ bool Time::operator<=(Time & t)
 
 }
 
-bool Time::operator>=(Time & t)
+bool Time::operator>=(Time const& t) const
 {
     Time temp{*this};
     if(temp > t || temp == t)
@@ -304,7 +304,7 @@ bool Time::operator>=(Time & t)
     }
 }
 
-Time::operator string()
+Time::operator string() const
 {
     return to_string();
 }

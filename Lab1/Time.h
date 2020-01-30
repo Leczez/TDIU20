@@ -14,19 +14,19 @@ public:
     int get_second() const;
     bool is_am() const;
     std::string to_string( bool = false) const;
-    Time operator+(int N);
+    Time operator+(int const N);
     Time operator++(int);
     Time& operator++();
-    Time operator-(int N);
+    Time operator-(int const N);
     Time operator--(int);
     Time& operator--();
-    operator std::string();
-    bool operator==(Time & t);
-    bool operator!=(Time & t);
-    bool operator<(Time & t);
-    bool operator>(Time & t);
-    bool operator<=(Time & t);
-    bool operator>=(Time & t);
+    operator std::string() const;
+    bool operator==(Time const& t) const;
+    bool operator!=(Time const& t) const;
+    bool operator<(Time const& t) const;
+    bool operator>(Time const& t) const;
+    bool operator<=(Time const& t) const;
+    bool operator>=(Time const& t) const;
 
 private:
     int hour{};
