@@ -15,11 +15,11 @@ public:
     bool is_am() const;
     std::string to_string( bool = false) const;
     Time operator+(int N);
-    void operator++(int);
-    void operator++();
+    Time operator++(int);
+    Time& operator++();
     Time operator-(int N);
-    void operator--(int);
-    void operator--();
+    Time operator--(int);
+    Time& operator--();
     bool operator==(Time & t);
     bool operator!=(Time & t);
     bool operator<(Time & t);

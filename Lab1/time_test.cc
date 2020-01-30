@@ -71,6 +71,13 @@ TEST_CASE ("Convert to string" )
     CHECK( Time{12, 9, 0}.to_string()     ==    "12:09:00" );
     CHECK( Time{12, 1, 2}.to_string()     ==    "12:01:02" );
     CHECK( Time{14,03,02}.to_string(true) ==    "02:03:02 pm" );
+    CHECK( Time{23, 1, 2}.to_string()     ==    "23:01:02" );
+    CHECK( Time{12,03,02}.to_string(true) ==    "12:03:02 pm" );
+    CHECK( Time{13, 9, 0}.to_string(true) ==    "01:09:00 pm" );
+    CHECK( Time{0, 0, 0}.to_string(true)  ==    "12:00:00 am" );
+    CHECK( Time{11, 59, 59}.to_string(true) ==  "11:59:59 am" );
+    CHECK( Time{23,03,02}.to_string(true) ==    "11:03:02 pm" );
+
 }
 
 
@@ -79,6 +86,8 @@ TEST_CASE ("Operator +")
     Time t{0,0,0};
     t = t + 3;
     CHECK(t.to_string() == "00:00:03");
+    t = t + 3660+ 24*3600;
+    CHECK(t.to_string() == "01:01:03");
 
 }
 

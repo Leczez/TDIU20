@@ -66,9 +66,13 @@ bool Time::is_am() const
 string Time::to_string(bool am_pm_format ) const
 {
     stringstream ss{};
-    if(am_pm_format && !is_am())
+    if(am_pm_format && hour > 12)
     {
         format_into_ostream(hour-12, ss);
+    }
+    else if(am_pm_format && hour < 1)
+    {
+        format_into_ostream(hour+12, ss);
     }
     else
     {
@@ -82,13 +86,13 @@ string Time::to_string(bool am_pm_format ) const
 
     if(am_pm_format )
     {
-        if(hour >= 12)
+        if(is_am())
         {
-            ss << " pm";
+            ss << " am";
         }
         else
         {
-            ss << " am";
+            ss << " pm";
         }
     }
     return ss.str();
@@ -117,7 +121,7 @@ Time Time::operator+(int N)
     return temp;
 }
 
-void Time::operator++(int)
+Time Time::operator++(int)
 {
 
     second++;
@@ -132,11 +136,12 @@ void Time::operator++(int)
             if(hour > 23)
             {
                 hour = 0;
-              }
+            }
         }
     }
+    return *this;
 }
-void Time::operator++()
+Time& Time::operator++()
 {
     second++;
     if(second > 59)
@@ -153,6 +158,7 @@ void Time::operator++()
               }
         }
     }
+    return *this;
 }
 
 Time Time::operator-(int N)
@@ -165,7 +171,7 @@ Time Time::operator-(int N)
     return temp;
 }
 
-void Time::operator--(int)
+Time Time::operator--(int)
 {
     second--;
     if(second < 0)
@@ -182,9 +188,10 @@ void Time::operator--(int)
               }
         }
     }
+    return *this;
 }
 
-void Time::operator--()
+Time& Time::operator--()
 {
     second--;
     if(second < 0)
@@ -201,6 +208,7 @@ void Time::operator--()
               }
         }
     }
+    return *this;
 }
 
 bool Time::operator==(Time & t)
