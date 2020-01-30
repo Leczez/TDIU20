@@ -114,9 +114,16 @@ void Time::format_into_ostream (int n, ostream& os) const
 Time Time::operator+(int N)
 {
     Time temp{hour,minute,second};
-    for(int i{}; i < N;i++)
+    if(N < 0)
     {
-      temp++;
+        temp = temp -(-N);
+    }
+    else
+    {
+        for(int i{}; i < N;i++)
+        {
+          temp++;
+        }
     }
     return temp;
 }
@@ -164,9 +171,17 @@ Time& Time::operator++()
 Time Time::operator-(int N)
 {
     Time temp{hour,minute,second};
-    for(int i{}; i < N;i++)
+
+    if(N < 0)
     {
-      temp--;
+        temp = temp + (-N);
+    }
+    else
+    {
+        for(int i{}; i < N;i++)
+        {
+              temp--;
+        }
     }
     return temp;
 }

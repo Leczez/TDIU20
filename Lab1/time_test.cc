@@ -89,6 +89,10 @@ TEST_CASE ("Operator +")
     t = t + 3660+ 24*3600;
     CHECK(t.to_string() == "01:01:03");
 
+    Time t2{0,0,0};
+    t2 = t2 +(-10);
+    CHECK(t2.to_string() == "23:59:50");
+
 }
 
 TEST_CASE ("Operator ++")
@@ -102,8 +106,12 @@ TEST_CASE ("Operator ++")
 TEST_CASE("Operator -")
 {
     Time t{0,0,0};
-    t = t - 3;
-    CHECK(t.to_string() == "23:59:57");
+    t = t -(-3);
+    CHECK(t.to_string() == "00:00:03");
+    Time t2{0,0,5};
+    t2 = t2 - 1;
+    CHECK(t2.to_string() == "00:00:04");
+
 }
 
 
@@ -112,6 +120,7 @@ TEST_CASE("Operator --")
     Time t{0,0,0};
     t--;
     CHECK(t.to_string() == "23:59:59");
+
 }
 
 
