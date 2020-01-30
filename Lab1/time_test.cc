@@ -126,7 +126,7 @@ TEST_CASE("Operator --")
 
 TEST_CASE ("Conversion to string" )
 {
-    //CHECK( string(Time{2,4,1}) == "02:04:01" ); FATTAR INTE DENNA?
+    //CHECK( string(Time{2,4,1}) == "02:04:01" );
 }
 #if 0
 TEST_CASE ("Output operator" )
