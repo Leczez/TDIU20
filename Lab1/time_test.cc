@@ -98,16 +98,26 @@ TEST_CASE ("Operator +")
 TEST_CASE ("Operator ++")
 {
     Time t{0,0,0};
-    t++;
+    Time t2{0,1,0};
+    t2 = t++;
     CHECK(t.to_string() == "00:00:01");
+    CHECK(t2.to_string() == "00:00:00");
+}
+TEST_CASE (" ++ Operator ")
+{
+    Time t{0,0,0};
+    Time t2{0,1,0};
+    t2 = ++t;
+    CHECK(t.to_string() == "00:00:01");
+    CHECK(t2.to_string() == "00:00:01");
 
 }
-
 TEST_CASE("Operator -")
 {
     Time t{0,0,0};
     t = t -(-3);
     CHECK(t.to_string() == "00:00:03");
+
     Time t2{0,0,5};
     t2 = t2 - 1;
     CHECK(t2.to_string() == "00:00:04");
@@ -118,15 +128,24 @@ TEST_CASE("Operator -")
 TEST_CASE("Operator --")
 {
     Time t{0,0,0};
-    t--;
+    Time t2{0,1,0};
+    t2 = t--;
     CHECK(t.to_string() == "23:59:59");
+    CHECK(t2.to_string() == "00:00:00");
 
 }
-
+TEST_CASE(" -- Operator ")
+{
+    Time t{0,0,0};
+    Time t2{0,1,0};
+    t2 = --t;
+    CHECK(t.to_string() == "23:59:59");
+    CHECK(t2.to_string() == "23:59:59");
+}
 
 TEST_CASE ("Conversion to string" )
 {
-    //CHECK( string(Time{2,4,1}) == "02:04:01" );
+    CHECK( string(Time{2,4,1}) == "02:04:01" );
 }
 #if 0
 TEST_CASE ("Output operator" )
