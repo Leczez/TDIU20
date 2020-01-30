@@ -113,15 +113,13 @@ Time Time::operator+(int N)
     for(int i{}; i < N;i++)
     {
       temp++;
-      cout << "operator+ "<< temp.hour << " " << temp.minute << " " << temp.second << endl;
     }
-    cout << "operator2+ "<< temp.hour << " " << temp.minute << " " << temp.second << endl;
     return temp;
 }
 
 void Time::operator++(int)
 {
-    //Time t{*this};
+
     second++;
     if(second > 59)
     {
@@ -137,12 +135,9 @@ void Time::operator++(int)
               }
         }
     }
-    cout << "operator++ "<< hour << " " << minute << " " << second << endl;
-    //return t;
 }
 void Time::operator++()
 {
-    //Time t{*this};
     second++;
     if(second > 59)
     {
@@ -158,9 +153,59 @@ void Time::operator++()
               }
         }
     }
-    cout << "operator++ "<< hour << " " << minute << " " << second << endl;
-    //return t;
 }
+
+Time Time::operator-(int N)
+{
+    Time temp{hour,minute,second};
+    for(int i{}; i < N;i++)
+    {
+      temp--;
+    }
+    return temp;
+}
+
+void Time::operator--(int)
+{
+    second--;
+    if(second < 0)
+    {
+        second = 59;
+        minute--;
+        if(minute < 0)
+        {
+            minute = 59;
+            hour--;
+            if(hour < 0)
+            {
+                hour = 23;
+              }
+        }
+    }
+}
+
+void Time::operator--()
+{
+    second--;
+    if(second < 0)
+    {
+        second = 59;
+        minute--;
+        if(minute < 0)
+        {
+            minute = 59;
+            hour--;
+            if(hour < 0)
+            {
+                hour = 23;
+              }
+        }
+    }
+}
+
+
+
+
 
 int Time::get_hour() const
 {

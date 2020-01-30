@@ -17,6 +17,9 @@ public:
     Time operator+(int N);
     void operator++(int);
     void operator++();
+    Time operator-(int N);
+    void operator--(int);
+    void operator--();
 private:
     int hour{};
     int minute{};
