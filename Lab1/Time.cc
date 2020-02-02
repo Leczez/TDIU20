@@ -347,7 +347,7 @@ ostream& operator<<(ostream& os, Time const& t)
     os << t.to_string();
     return os;
 }
-istream& operator>>(istream& is, Time & t)
+istream& operator>>(istream& is, Time& t)
 {
     int temp_h {};
     int temp_m {};

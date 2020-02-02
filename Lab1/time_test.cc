@@ -180,17 +180,15 @@ TEST_CASE ("Input operator" )
         CHECK(t.to_string() == "02:05:01");
     }
 
-/*    SECTION("Chained output")
-    {
-        ss << Time{23,10,32} << "---";
-        CHECK(ss.str() == "23:10:32---");
+    SECTION("Chained input")
+    {   
+        Time t2{};
+        Time t3{};
+        ss << "23:23:23" << " " << "12:12:12";
+        ss >> t2 >> t3;
+        CHECK(t2.to_string() == "23:23:23");
+        CHECK(t3.to_string() == "12:12:12");
     }
-    SECTION("Const time")
-    {
-        Time const t{23,23,23};
-        ss << t;
-        CHECK(ss.str() == "23:23:23");
-    }*/
 }
 #if 0
 #endif
