@@ -181,13 +181,28 @@ TEST_CASE ("Input operator" )
     }
 
     SECTION("Chained input")
-    {   
+    {
         Time t2{};
+
         Time t3{};
         ss << "23:23:23" << " " << "12:12:12";
         ss >> t2 >> t3;
         CHECK(t2.to_string() == "23:23:23");
         CHECK(t3.to_string() == "12:12:12");
+    }
+
+    SECTION("Failbit check")
+    {
+        Time t1{};
+
+        ss << "23:23:23";
+        ss >> t1;
+        CHECK(t1.to_string() == "23:23:23");
+        CHECK(!ss.fail());
+        Time t2{};
+        ss << "25:23:23";
+        ss >> t2;
+        CHECK(ss.fail());
     }
 }
 #if 0

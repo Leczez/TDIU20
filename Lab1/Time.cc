@@ -1,6 +1,7 @@
 // I denna fil läggs definitionerna (implementationen) av de funktioner
 // som deklarerats i Time.h
 #include "Time.h"
+#include <string>
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
@@ -10,7 +11,7 @@ using namespace std;
 Time::Time(int h, int m, int s):
 hour{h}, minute{m}, second{s}
 {
-    if (check_for_invalid_input(h,m,s))
+    if(check_for_invalid_input(h, m, s))
     {
         throw std::invalid_argument{"invalid_input"};
     }
@@ -19,13 +20,13 @@ hour{h}, minute{m}, second{s}
 
 Time::Time(std::string t)
 {
-    if (t.size() == 8 && t[2] == ':' && t[5] == ':')
+    if(t.size() == 8 && t[2] == ':' && t[5] == ':')
     {
-        hour = stoi(t.substr(0,2));
-        minute = stoi(t.substr(3,2));
-        second = stoi(t.substr(6,2));
+        hour   = stoi(t.substr(0, 2));
+        minute = stoi(t.substr(3, 2));
+        second = stoi(t.substr(6, 2));
 
-        if (check_for_invalid_input(hour,minute,second))
+        if(check_for_invalid_input(hour, minute, second))
         {
             throw std::invalid_argument{"invalid_input"};
         }
@@ -52,7 +53,7 @@ bool Time::check_for_invalid_input(int h, int m, int s) const
 
 bool Time::is_am() const
 {
-    if (hour < 12)
+    if(hour < 12)
     {
         return true;
     }
@@ -63,16 +64,16 @@ bool Time::is_am() const
 }
 
 
-string Time::to_string(bool am_pm_format ) const
+string Time::to_string(bool am_pm_format) const
 {
-    stringstream ss{};
+    ostringstream ss{};
     if(am_pm_format && hour > 12)
     {
-        format_into_ostream(hour-12, ss);
+        format_into_ostream((hour - 12), ss);
     }
     else if(am_pm_format && hour < 1)
     {
-        format_into_ostream(hour+12, ss);
+        format_into_ostream((hour + 12), ss);
     }
     else
     {
@@ -99,7 +100,7 @@ string Time::to_string(bool am_pm_format ) const
 }
 
 
-void Time::format_into_ostream (int n, ostream& os) const
+void Time::format_into_ostream (int n, ostream &os) const
 {
     if( n < 10)
     {
@@ -111,16 +112,17 @@ void Time::format_into_ostream (int n, ostream& os) const
     }
 }
 
+
 Time Time::operator+(int N)
 {
-    Time temp{hour,minute,second};
+    Time temp{hour, minute, second};
     if(N < 0)
     {
         temp = temp -(-N);
     }
     else
     {
-        for(int i{}; i < N;i++)
+        for(int i{}; i < N; i++)
         {
           temp++;
         }
@@ -128,12 +130,15 @@ Time Time::operator+(int N)
     return temp;
 }
 
+
 Time Time::operator++(int)
 {
     Time t{*this};
     ++(*this);
     return t;
 }
+
+
 Time& Time::operator++()
 {
     second++;
@@ -154,9 +159,10 @@ Time& Time::operator++()
     return *this;
 }
 
+
 Time Time::operator-(int N)
 {
-    Time temp{hour,minute,second};
+    Time temp{hour, minute, second};
 
     if(N < 0)
     {
@@ -164,7 +170,7 @@ Time Time::operator-(int N)
     }
     else
     {
-        for(int i{}; i < N;i++)
+        for(int i{}; i < N; i++)
         {
               temp--;
         }
@@ -172,12 +178,14 @@ Time Time::operator-(int N)
     return temp;
 }
 
+
 Time Time::operator--(int)
 {
     Time t{*this};
     --(*this);
     return t;
 }
+
 
 Time& Time::operator--()
 {
@@ -199,7 +207,8 @@ Time& Time::operator--()
     return *this;
 }
 
-bool Time::operator==(Time const& t) const
+
+bool Time::operator==(Time const &t) const
 {
     if(hour == t.hour && minute == t.minute && second == t.second)
     {
@@ -211,7 +220,8 @@ bool Time::operator==(Time const& t) const
     }
 }
 
-bool Time::operator!=(Time const& t) const
+
+bool Time::operator!=(Time const &t) const
 {
     if(hour != t.hour || minute != t.minute || second != t.second)
     {
@@ -224,7 +234,8 @@ bool Time::operator!=(Time const& t) const
 
 }
 
-bool Time::operator<(Time const& t) const
+
+bool Time::operator<(Time const &t) const
 {
     if(hour < t.hour)
     {
@@ -251,7 +262,8 @@ bool Time::operator<(Time const& t) const
 
 }
 
-bool Time::operator>(Time const& t) const
+
+bool Time::operator>(Time const &t) const
 {
     if(hour > t.hour)
     {
@@ -277,7 +289,8 @@ bool Time::operator>(Time const& t) const
     }
 }
 
-bool Time::operator<=(Time const& t) const
+
+bool Time::operator<=(Time const &t) const
 {
     Time temp{*this};
     if(temp < t || temp == t)
@@ -291,7 +304,8 @@ bool Time::operator<=(Time const& t) const
 
 }
 
-bool Time::operator>=(Time const& t) const
+
+bool Time::operator>=(Time const &t) const
 {
     Time temp{*this};
     if(temp > t || temp == t)
@@ -303,7 +317,6 @@ bool Time::operator>=(Time const& t) const
         return false;
     }
 }
-
 
 
 Time::operator string() const
@@ -342,30 +355,30 @@ void Time::set_second(int n)
 }
 
 
-ostream& operator<<(ostream& os, Time const& t)
+ostream& operator<<(ostream &os, Time const &t)
 {
     os << t.to_string();
     return os;
 }
-istream& operator>>(istream& is, Time& t)
-{
-    int temp_h {};
-    int temp_m {};
-    int temp_s {};
-    char c {};
-    is >> temp_h >> c >> temp_m >> c >> temp_s;
-    //Time temp_t(temp_h,temp_m,temp_s);
 
-    if(t.check_for_invalid_input(temp_h, temp_m, temp_s))
+
+istream& operator>>(istream &is, Time &t)
+{
+    int h {};
+    int m {};
+    int s {};
+    char c {};
+    is >> h >> c >> m >> c >> s;
+
+    if(t.check_for_invalid_input(h, m, s))
     {
         is.setstate(std::ios_base::failbit);
     }
     else
     {
-        t.set_hour(temp_h);
-        t.set_minute(temp_m);
-        t.set_second(temp_s);
-
+        t.hour   = h;
+        t.minute = m;
+        t.second = s;
     }
     return is;
 }
