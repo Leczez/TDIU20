@@ -340,13 +340,13 @@ istream& operator>>(istream& is, Time & t)
     is >> temp_h >> c >> temp_m >> c >> temp_s;
     Time temp_t(temp_h,temp_m,temp_s);
 
-    /*if(check_for_invalid_input(temp_h, temp_m, temp_s))
+    if(t.check_for_invalid_input(temp_h, temp_m, temp_s))
     {
         is.setstate(std::ios_base::failbit);
     }
     else
     {
         t = temp_t;
-    }*/
+    }
     return is;
 }
