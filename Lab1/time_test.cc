@@ -147,7 +147,7 @@ TEST_CASE ("Conversion to string" )
 {
     CHECK( string(Time{2,4,1}) == "02:04:01" );
 }
-#if 0
+
 TEST_CASE ("Output operator" )
 {
     stringstream ss;
@@ -156,6 +156,7 @@ TEST_CASE ("Output operator" )
         ss << Time{2,5,1};
         CHECK(ss.str() == "02:05:01");
     }
+
     SECTION("Chained output")
     {
         ss << Time{23,10,32} << "---";
@@ -168,4 +169,28 @@ TEST_CASE ("Output operator" )
         CHECK(ss.str() == "23:23:23");
     }
 }
+TEST_CASE ("Input operator" )
+{
+    stringstream ss;
+    SECTION("Simple input")
+    {
+        Time t{};
+        ss << "02:05:01";
+        ss >> t;
+        CHECK(t.to_string() == "02:05:01");
+    }
+
+/*    SECTION("Chained output")
+    {
+        ss << Time{23,10,32} << "---";
+        CHECK(ss.str() == "23:10:32---");
+    }
+    SECTION("Const time")
+    {
+        Time const t{23,23,23};
+        ss << t;
+        CHECK(ss.str() == "23:23:23");
+    }*/
+}
+#if 0
 #endif

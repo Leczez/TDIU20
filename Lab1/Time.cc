@@ -304,11 +304,6 @@ bool Time::operator>=(Time const& t) const
     }
 }
 
-ostream& Time::operator<<(ostream& os) const
-{
-    os << (*this).to_string();
-    return os;
-}
 
 
 Time::operator string() const
@@ -329,4 +324,29 @@ int Time::get_minute() const
 int Time::get_second() const
 {
     return second;
+}
+
+ostream& operator<<(ostream& os, Time const& t)
+{
+    os << t.to_string();
+    return os;
+}
+istream& operator>>(istream& is, Time & t)
+{
+    int temp_h {};
+    int temp_m {};
+    int temp_s {};
+    char c {};
+    is >> temp_h >> c >> temp_m >> c >> temp_s;
+    Time temp_t(temp_h,temp_m,temp_s);
+
+    /*if(check_for_invalid_input(temp_h, temp_m, temp_s))
+    {
+        is.setstate(std::ios_base::failbit);
+    }
+    else
+    {
+        t = temp_t;
+    }*/
+    return is;
 }
