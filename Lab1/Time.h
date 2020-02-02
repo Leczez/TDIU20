@@ -14,6 +14,11 @@ public:
     int get_hour() const;
     int get_minute() const;
     int get_second() const;
+    
+    void set_hour(int n);
+    void set_minute(int n);
+    void set_second(int n);
+
     bool is_am() const;
     std::string to_string( bool = false) const;
     Time operator+(int const N);

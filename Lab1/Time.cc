@@ -326,6 +326,22 @@ int Time::get_second() const
     return second;
 }
 
+void Time::set_hour(int n)
+{
+    hour = n;
+}
+
+void Time::set_minute(int n)
+{
+    minute = n;
+}
+
+void Time::set_second(int n)
+{
+   second = n;
+}
+
+
 ostream& operator<<(ostream& os, Time const& t)
 {
     os << t.to_string();
@@ -338,7 +354,7 @@ istream& operator>>(istream& is, Time & t)
     int temp_s {};
     char c {};
     is >> temp_h >> c >> temp_m >> c >> temp_s;
-    Time temp_t(temp_h,temp_m,temp_s);
+    //Time temp_t(temp_h,temp_m,temp_s);
 
     if(t.check_for_invalid_input(temp_h, temp_m, temp_s))
     {
@@ -346,7 +362,10 @@ istream& operator>>(istream& is, Time & t)
     }
     else
     {
-        t = temp_t;
+        t.set_hour(temp_h);
+        t.set_minute(temp_m);
+        t.set_second(temp_s);
+
     }
     return is;
 }
