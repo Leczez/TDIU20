@@ -8,7 +8,7 @@
 using namespace std;
 
 
-Time::Time(int h, int m, int s):
+Time::Time(int const h, int const m, int const s):
 hour{h}, minute{m}, second{s}
 {
     if(check_for_invalid_input(h, m, s))
@@ -18,7 +18,7 @@ hour{h}, minute{m}, second{s}
 }
 
 
-Time::Time(std::string t)
+Time::Time(std::string const &t)
 {
     if(t.size() == 8 && t[2] == ':' && t[5] == ':')
     {
@@ -38,7 +38,7 @@ Time::Time(std::string t)
 }
 
 
-bool Time::check_for_invalid_input(int h, int m, int s) const
+bool Time::check_for_invalid_input(int const h, int const m, int const s) const
 {
     if(h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0)
     {
@@ -64,7 +64,7 @@ bool Time::is_am() const
 }
 
 
-string Time::to_string(bool am_pm_format) const
+string Time::to_string(const bool am_pm_format) const
 {
     ostringstream ss{};
     if(am_pm_format && hour > 12)
@@ -100,7 +100,7 @@ string Time::to_string(bool am_pm_format) const
 }
 
 
-void Time::format_into_ostream (int n, ostream &os) const
+void Time::format_into_ostream (int const n, ostream &os) const
 {
     if( n < 10)
     {
@@ -113,16 +113,16 @@ void Time::format_into_ostream (int n, ostream &os) const
 }
 
 
-Time Time::operator+(int N)
+Time Time::operator+(int const n)
 {
     Time temp{hour, minute, second};
-    if(N < 0)
+    if(n < 0)
     {
-        temp = temp -(-N);
+        temp = temp -(-n);
     }
     else
     {
-        for(int i{}; i < N; i++)
+        for(int i{}; i < n; i++)
         {
           temp++;
         }
@@ -160,17 +160,17 @@ Time& Time::operator++()
 }
 
 
-Time Time::operator-(int N)
+Time Time::operator-(int const n)
 {
     Time temp{hour, minute, second};
 
-    if(N < 0)
+    if(n < 0)
     {
-        temp = temp + (-N);
+        temp = temp + (-n);
     }
     else
     {
-        for(int i{}; i < N; i++)
+        for(int i{}; i < n; i++)
         {
               temp--;
         }
@@ -339,17 +339,17 @@ int Time::get_second() const
     return second;
 }
 
-void Time::set_hour(int n)
+void Time::set_hour(int const n)
 {
     hour = n;
 }
 
-void Time::set_minute(int n)
+void Time::set_minute(int const n)
 {
     minute = n;
 }
 
-void Time::set_second(int n)
+void Time::set_second(int const n)
 {
    second = n;
 }

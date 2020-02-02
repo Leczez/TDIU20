@@ -9,25 +9,27 @@ class Time
 {
 public:
     Time() = default;
-    Time(int h, int m, int s);
-    Time(std::string t);
+    Time(int const h, int const m, int const s);
+    Time(std::string const &t);
+
     int get_hour() const;
     int get_minute() const;
     int get_second() const;
-
-    void set_hour(int n);
-    void set_minute(int n);
-    void set_second(int n);
+    void set_hour(int const n);
+    void set_minute(int const n);
+    void set_second(int const n);
 
     bool is_am() const;
-    std::string to_string( bool = false) const;
-    Time operator+(int const N);
+    std::string to_string( const bool = false) const;
+    operator std::string() const;
+
+    Time operator+(int const n);
     Time operator++(int);
     Time& operator++();
-    Time operator-(int const N);
+    Time operator-(int const n);
     Time operator--(int);
     Time& operator--();
-    operator std::string() const;
+
     bool operator==(Time const &t) const;
     bool operator!=(Time const &t) const;
     bool operator<(Time const &t) const;
@@ -41,8 +43,9 @@ private:
     int hour{};
     int minute{};
     int second{};
-    void format_into_ostream (int n, std::ostream &os) const;
-    bool check_for_invalid_input(int h, int m, int s) const;
+
+    bool check_for_invalid_input(int const h, int const m, int const s) const;
+    void format_into_ostream (int const n, std::ostream &os) const;
 };
 
 #endif
