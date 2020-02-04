@@ -104,12 +104,9 @@ void Time::format_into_ostream (int const n, ostream &os) const
 {
     if( n < 10)
     {
-        os << 0 << n;
+        os << 0;
     }
-    else
-    {
-        os << n;
-    }
+    os << n;
 }
 
 
@@ -231,7 +228,6 @@ bool Time::operator!=(Time const &t) const
     {
         return false;
     }
-
 }
 
 
@@ -259,7 +255,6 @@ bool Time::operator<(Time const &t) const
             }
         }
     }
-
 }
 
 
@@ -301,7 +296,6 @@ bool Time::operator<=(Time const &t) const
     {
         return false;
     }
-
 }
 
 
