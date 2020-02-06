@@ -10,7 +10,8 @@ public:
 
 
 
-    friend std::ostream& operator<<(std::ostream& os, List const &l);
+    friend std::ostream& operator<<(std::ostream& os, List const& l);
+    
 private:
     class Element
     {

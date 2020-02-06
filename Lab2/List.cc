@@ -47,12 +47,12 @@ void List::insert(int const N)
 }
 
 
-ostream& List::operator<<(ostream& os, List const &l)
+ostream& operator<<(ostream& os, List const& l)
 {
-    Element* temp{l.first};
+    List::Element* temp{l.first};
     while(temp->next != nullptr)
     {
-        os << temp->*next.value << ", ";
+        os << temp->next->value << ", ";
         temp = temp->next;
     }
     return os;
