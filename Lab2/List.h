@@ -7,11 +7,11 @@ public:
     List();
 
     void insert(int const N);
-
+    void remove(int const N);
 
 
     friend std::ostream& operator<<(std::ostream& os, List const& l);
-    
+
 private:
     class Element
     {

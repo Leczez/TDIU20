@@ -46,14 +46,28 @@ void List::insert(int const N)
 
 }
 
+void List::remove(int const N)
+{
+    Element* temp{first};
+    for(int i{}; i < N;i++)
+    {   
+        temp = temp->next;
+    }
+    temp->next->prev = temp->prev;
+    temp->prev->next = temp->next;
+}
 
 ostream& operator<<(ostream& os, List const& l)
 {
     List::Element* temp{l.first};
     while(temp->next != nullptr)
     {
-        os << temp->next->value << ", ";
+        os << temp->next->value;
         temp = temp->next;
+        if(temp->next != nullptr)
+        {
+            os << " ";
+        }
     }
     return os;
 }

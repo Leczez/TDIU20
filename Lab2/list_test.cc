@@ -27,5 +27,20 @@ TEST_CASE("Single Insert")
     list.insert(10);
 }
 
+TEST_CASE("Remove function")
+{
+    stringstream ss{};
+
+    List list{};
+    list.insert(10);
+    list.insert(11);
+    list.insert(12);
+
+    list.remove(2);
+    ss << list;
+    CHECK(ss.str() == "10 12 ");
+
+}
+
 #if 0
 #endif
