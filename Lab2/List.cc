@@ -23,7 +23,7 @@ void List::insert(int const N)
         temp->next = new_box;
     }
 */
-    
+
     while(temp != nullptr && temp->next != nullptr)
     {
         if(temp->next->value < N)
@@ -43,11 +43,17 @@ void List::insert(int const N)
             temp = temp->next;
         }
     }
-    
+
 }
 
 
-ostream& operator<<(ostream& os, List& list)
+ostream& List::operator<<(ostream& os, List const &l)
 {
-    
+    Element* temp{l.first};
+    while(temp->next != nullptr)
+    {
+        os << temp->*next.value << ", ";
+        temp = temp->next;
+    }
+    return os;
 }

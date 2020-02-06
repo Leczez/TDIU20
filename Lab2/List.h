@@ -5,12 +5,12 @@ class List
 {
 public:
     List();
-    
+
     void insert(int const N);
 
 
-    
 
+    friend std::ostream& operator<<(std::ostream& os, List const &l);
 private:
     class Element
     {
@@ -25,4 +25,3 @@ private:
     Element* first{}; // first och last pekarna ska inte kunna ändras (const)
     Element* last{};
 };
-ostream& operator<<(ostream& os, List& list);
