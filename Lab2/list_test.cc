@@ -18,7 +18,6 @@ using namespace std;
 TEST_CASE ("Default constructor")
 {
     List l{};
-    
 }
 
 TEST_CASE("Single Insert")
@@ -35,12 +34,23 @@ TEST_CASE("Remove function")
     list.insert(10);
     list.insert(11);
     list.insert(12);
+    list.insert(13);
 
-    list.remove(2);
+    list.remove(1);
     ss << list;
-    CHECK(ss.str() == "10 12 ");
+    CHECK(ss.str() == "10 12 13");
+
+    SECTION("Exception")
+    {
+        List list{};
+        list.insert(10);
+        list.insert(11);
+        list.insert(12);
+        list.insert(13);
+        CHECK_THROWS(list.remove(6));
+    }
 
 }
-
 #if 0
+
 #endif

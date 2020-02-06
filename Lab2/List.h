@@ -1,10 +1,11 @@
 #include <iostream>
-
+#include <initializer_list>
 
 class List
 {
 public:
     List();
+    List(std::initializer_list<int> input);
 
     void insert(int const N);
     void remove(int const N);
