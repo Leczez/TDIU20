@@ -5,6 +5,7 @@ class List
 {
 public:
     List();
+    ~List();
     List(std::initializer_list<int> input);
 
     void insert(int const N);
@@ -19,7 +20,8 @@ private:
     public:
         Element() = default;
         Element(int N);
-        Element* next{nullptr}; // default värde för pointer = nullptr
+        ~Element();
+        Element* next{nullptr};
         Element* prev{nullptr};
         int value{};
     };

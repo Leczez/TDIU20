@@ -6,16 +6,25 @@ using namespace std;
 
 List::List()
 {
-    first = new Element{};
     last = new Element{};
-    first->next = last;
+    first = new Element{};
     last->prev = first;
+    first->next = last;
 }
+
+
+List::~List()
+{
+    std::cout << "KALLADE PÅ LISTDESTRUKTOR" << endl;
+    delete first;
+    delete last; //KAN TA BORT DENNA OCH KOMMENTERA UT ANDRA IFSATSEN I ELEMENTDESTRUKTORN. Då tar "delete first" hand om last.
+}
+
 
 List::List(initializer_list<int> data)
 {
     vector<int> input{data};
-    for(int i{};i < input.size();i++)
+    for(unsigned int i{};i < input.size();i++)
     {
         insert(input[i]);
     }
@@ -25,16 +34,24 @@ List::Element::Element(int N):
 value{N}
 {}
 
+List::Element::~Element()
+{
+    std::cout << "KALLADE PÅ ELEMENTDESTRUKTOR" << endl;
+    if(this->next != nullptr) //CHECK SO WE DO NOT DELETE LAST SENTINEL
+    {
+        if(this->next->next != nullptr) // CHECK SO WE DO NOT DELETE FIRST SENTINEL
+        {
+            delete this->next;
+        }
+    }
+}
+
+
 void List::insert(int const N)
 {
     Element* temp{first->next};
     Element* new_box = new Element{N};
-/*    if(temp->next->next == nullptr)
-    {
-        new_box->next = temp->next->next
-        temp->next = new_box;
-    }
-*/
+
     while(temp != last || temp->prev == first)
     {
         if(N <= temp->value || temp == last)
@@ -74,6 +91,9 @@ void List::remove(int const N)
     }
     temp->next->prev = temp->prev;
     temp->prev->next = temp->next;
+
+    temp->next = nullptr; //SO THE DESTRUCTOR DOESNT TAKE THE WHOLE LIST WITH ITSELF
+    temp->prev = nullptr;
     delete temp;
 }
 
@@ -84,7 +104,7 @@ ostream& operator<<(ostream& os, List const& l)
     {
         os << temp->next->value;
         temp = temp->next;
-        if(temp->next != l.last)
+        if(temp->next != l.last) // stops it from writing a space in the last output
         {
             os << " ";
         }

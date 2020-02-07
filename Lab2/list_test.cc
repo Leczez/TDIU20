@@ -26,6 +26,22 @@ TEST_CASE("Single Insert")
     list.insert(10);
 }
 
+TEST_CASE("Multiple Inserts")
+{
+    List list{};
+    list.insert(1);
+    list.insert(3);
+    list.insert(6);
+    list.insert(-1);
+    list.insert(10);
+    list.insert(10);
+    list.insert(0);
+
+    stringstream ss{};
+    ss << list;
+    CHECK(ss.str() == "-1 0 1 3 6 10 10");
+}
+
 TEST_CASE("Remove function")
 {
     stringstream ss{};
@@ -39,6 +55,7 @@ TEST_CASE("Remove function")
     list.remove(1);
     ss << list;
     CHECK(ss.str() == "10 12 13");
+
 
     SECTION("Exception")
     {
