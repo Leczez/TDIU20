@@ -15,14 +15,18 @@ List::List()
 
 List::~List()
 {
-    std::cout << "KALLADE PÅ LISTDESTRUKTOR" << endl;
     delete first;
-    delete last; //KAN TA BORT DENNA OCH KOMMENTERA UT ANDRA IFSATSEN I ELEMENTDESTRUKTORN. Då tar "delete first" hand om last.
+    delete last;
 }
 
 
 List::List(initializer_list<int> data)
 {
+    last = new Element{};
+    first = new Element{};
+    last->prev = first;
+    first->next = last;
+
     vector<int> input{data};
     for(unsigned int i{};i < input.size();i++)
     {
@@ -30,13 +34,70 @@ List::List(initializer_list<int> data)
     }
 }
 
+
+List::List(List const &l)
+{
+    last = new Element{};
+    first = new Element{};
+    last->prev = first;
+    first->next = last;
+
+    Element* temp{l.first};
+    while(temp->next != l.last)
+    {
+        insert(temp->next->value);
+        temp = temp->next;
+    }
+}
+
+
+List::List(List &&l) noexcept
+{
+    last  = std::exchange(l.last, nullptr);
+    first = std::exchange(l.first, nullptr);
+}
+
+
+List& List::operator=(List const &l)
+{
+
+    Element* temp{l.first};
+    while(temp->next != l.last)
+    {
+        insert(temp->next->value);
+        temp = temp->next;
+    }
+    return *this;
+}
+
+List& List::operator=(List &&l) noexcept
+{
+    last  = std::exchange(l.last, nullptr);
+    first = std::exchange(l.first, nullptr);
+    return *this;
+}
+
+
+int List::listsize()
+{
+    Element* temp{first};
+    int size{};
+    while(temp->next != last)
+    {
+        ++size;
+        temp = temp->next;
+    }
+    return size;
+}
+
+
 List::Element::Element(int N):
 value{N}
 {}
 
 List::Element::~Element()
 {
-    std::cout << "KALLADE PÅ ELEMENTDESTRUKTOR" << endl;
+
     if(this->next != nullptr) //CHECK SO WE DO NOT DELETE LAST SENTINEL
     {
         if(this->next->next != nullptr) // CHECK SO WE DO NOT DELETE FIRST SENTINEL
@@ -47,7 +108,7 @@ List::Element::~Element()
 }
 
 
-void List::insert(int const N)
+void List::insert(int const N) const
 {
     Element* temp{first->next};
     Element* new_box = new Element{N};
@@ -78,7 +139,8 @@ void List::insert(int const N)
 
 }
 
-void List::remove(int const N)
+
+void List::remove(int const N) const
 {
     Element* temp{first};
     for(int i{}; i < N+1;i++)

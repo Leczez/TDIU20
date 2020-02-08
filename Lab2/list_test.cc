@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-
+#include <utility>
 #include "catch.hpp"
 #include "List.h"
 
@@ -67,6 +67,112 @@ TEST_CASE("Remove function")
         CHECK_THROWS(list.remove(6));
     }
 
+}
+
+TEST_CASE("Initilizer constructor")
+{
+    stringstream ss{};
+
+    List list{5,4,10};
+
+    ss << list;
+    CHECK(ss.str() == "4 5 10");
+
+}
+
+TEST_CASE("Listsize")
+{
+    stringstream ss{};
+
+    List list{5,4,10};
+    list.insert(1);
+    CHECK(list.listsize() == 4);
+    list.remove(0);
+    CHECK(list.listsize() == 3);
+    list.remove(0);
+    CHECK(list.listsize() == 2);
+    list.remove(0);
+    CHECK(list.listsize() == 1);
+    list.remove(0);
+    CHECK(list.listsize() == 0);
+
+
+}
+
+TEST_CASE("Copy constructor")
+{
+    stringstream ss{};
+
+    List list{5,4,10};
+    List list2{list};
+    ss << list2;
+    CHECK(ss.str() == "4 5 10");
+
+    SECTION("Empty copy")
+    {
+        stringstream ss{};
+        List list{};
+        List list2{list};
+        ss << list2;
+        CHECK(ss.str() == "");
+    }
+}
+
+TEST_CASE("Copy operator")
+{
+    stringstream ss{};
+
+    List list{5,4,10};
+    List list2 = list;
+    ss << list2;
+    CHECK(ss.str() == "4 5 10");
+
+    SECTION("Empty copy")
+    {
+        stringstream ss{};
+        List list{};
+        List list2 = list;
+        ss << list2;
+        CHECK(ss.str() == "");
+    }
+}
+
+TEST_CASE("Move constructor")
+{
+    stringstream ss{};
+
+    List list{5,4,10};
+    List list2{std::move(list)};
+    ss << list2;
+    CHECK(ss.str() == "4 5 10");
+
+    SECTION("Empty copy")
+    {
+        stringstream ss{};
+        List list{};
+        List list2{std::move(list)};
+        ss << list2;
+        CHECK(ss.str() == "");
+    }
+}
+
+TEST_CASE("Move operator")
+{
+    stringstream ss{};
+
+    List list{5,4,10};
+    List list2 = std::move(list);
+    ss << list2;
+    CHECK(ss.str() == "4 5 10");
+
+    SECTION("Empty copy")
+    {
+        stringstream ss{};
+        List list{};
+        List list2 = std::move(list);
+        ss << list2;
+        CHECK(ss.str() == "");
+    }
 }
 #if 0
 
