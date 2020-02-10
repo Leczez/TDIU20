@@ -34,7 +34,22 @@ private:
         Element* prev{nullptr};
         int value{};
     };
+    
+    class List_iterator
+    {
+    public:
+        List_iterator();
+
+
+    private:
+        List::Element* pos{};
+
+    };
+
+
     //Element* tmp{};
-     Element* first{};
-     Element* last{};
+    Element* begin() const;
+    Element* end() const;
+    Element* first{};
+    Element* last{};
 };
