@@ -78,7 +78,7 @@ List& List::operator=(List &&l) noexcept
 }
 
 
-int List::listsize()
+int List::size()
 {
     Element* temp{first};
     int size{};
@@ -106,6 +106,26 @@ List::Element::~Element()
         }
     }
 }
+
+
+int List::operator[](int index)
+{
+    Element* temp{first};
+    for(int i{};i < index + 1;i++)
+    {
+        temp = temp->next;
+        if(temp == last)
+        {
+            throw out_of_range{"index out of range"};
+        }
+        else if(i == (index))
+        {
+            return temp->value;
+        }
+
+    }
+}
+
 
 
 void List::insert(int const N) const

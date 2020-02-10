@@ -11,10 +11,10 @@ public:
     List(List &&l) noexcept;
     List& operator=(List const &l);
     List& operator=(List &&l) noexcept;
-    
+    int operator[](int index);
     void insert(int const N) const;
     void remove(int const N) const;
-    int  listsize();
+    int size();
 
     friend std::ostream& operator<<(std::ostream& os, List const& l);
 

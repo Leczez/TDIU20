@@ -86,15 +86,15 @@ TEST_CASE("Listsize")
 
     List list{5,4,10};
     list.insert(1);
-    CHECK(list.listsize() == 4);
+    CHECK(list.size() == 4);
     list.remove(0);
-    CHECK(list.listsize() == 3);
+    CHECK(list.size() == 3);
     list.remove(0);
-    CHECK(list.listsize() == 2);
+    CHECK(list.size() == 2);
     list.remove(0);
-    CHECK(list.listsize() == 1);
+    CHECK(list.size() == 1);
     list.remove(0);
-    CHECK(list.listsize() == 0);
+    CHECK(list.size() == 0);
 
 
 }
@@ -174,6 +174,25 @@ TEST_CASE("Move operator")
         CHECK(ss.str() == "");
     }
 }
+
+TEST_CASE("Index operator")
+{
+    List list{1,2,3,4,5};
+
+    CHECK(list[1] == 2);
+
+    CHECK(list[4] == 5);
+
+    SECTION("Check for Index out of bounds!")
+    {
+        List list{1,2,3,4,5};
+        CHECK_THROWS(list[7]);
+    }
+
+
+
+}
+
 #if 0
 
 #endif
