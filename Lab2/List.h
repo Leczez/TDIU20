@@ -9,19 +9,39 @@ public:
     List(std::initializer_list<int> input);
     List(List const &l);
     List(List &&l) noexcept;
+
     List& operator=(List const &l);
     List& operator=(List &&l) noexcept;
+
     int operator[](int index);
     void insert(int const N) const;
     void remove(int const N) const;
     int size();
-
     friend std::ostream& operator<<(std::ostream& os, List const& l);
+
+    class List_iterator;
+    List_iterator begin(); //t.ex. i Mainprogrammet: List_iterator it = lista.begin();
+    List_iterator end();
+
+    class List_iterator// Användaren ska kunna deklarera objekt av denna typ och kunna: !=, ++ och =
+    {
+    public:
+        friend class List; // Nu bör List komma åt allt i private hos List_iterator
+        class Element;
+        List_iterator();
+
+        List_iterator& operator=(List_iterator const &it);
+
+    private:
+        List_iterator(Element* ptr); //HJÄLPFUNKTION
+        Element* pos{};
+    };
 
 private:
     class Element
     {
     public:
+        //friend class List::List_iterator; behövs ej då iteratorklassen automatiskt har tillgång hit då den är nästlad.
         Element() = default;
         Element(int N);
         ~Element();
@@ -30,26 +50,12 @@ private:
         Element& operator=(Element const &) = default;
         Element& operator=(Element &&) = default;
 
+
         Element* next{nullptr};
         Element* prev{nullptr};
         int value{};
     };
-    
-    class List_iterator
-    {
-    public:
-        List_iterator();
 
-
-    private:
-        List::Element* pos{};
-
-    };
-
-
-    //Element* tmp{};
-    Element* begin() const;
-    Element* end() const;
     Element* first{};
     Element* last{};
 };

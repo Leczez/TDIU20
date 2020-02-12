@@ -91,22 +91,6 @@ int List::size()
 }
 
 
-List::Element::Element(int N):
-value{N}
-{}
-
-List::Element::~Element()
-{
-
-    if(this->next != nullptr) //CHECK SO WE DO NOT DELETE LAST SENTINEL
-    {
-        if(this->next->next != nullptr) // CHECK SO WE DO NOT DELETE FIRST SENTINEL
-        {
-            delete this->next;
-        }
-    }
-}
-
 
 int List::operator[](int index)
 {
@@ -118,12 +102,8 @@ int List::operator[](int index)
         {
             throw out_of_range{"index out of range"};
         }
-        else if(i == (index))
-        {
-            return temp->value;
-        }
-
     }
+    return temp->value;
 }
 
 
@@ -192,4 +172,43 @@ ostream& operator<<(ostream& os, List const& l)
         }
     }
     return os;
+}
+
+List::List_iterator List::begin()
+{
+    List_iterator temp{};
+    //temp.pos = first;
+    return temp;
+}
+List::List_iterator List::end()
+{
+
+}
+
+
+List::Element::Element(int N):
+value{N}
+{}
+
+List::Element::~Element()
+{
+    if(this->next != nullptr)
+    {
+        if(this->next->next != nullptr)
+        {
+            delete this->next;
+        }
+    }
+}
+
+
+List::List_iterator::List_iterator(): pos{nullptr}
+{}
+
+List::List_iterator::List_iterator(Element* ptr): pos{ptr} //HJÄLPFUNKTION
+{}
+
+List::List_iterator& List::List_iterator::operator=(List::List_iterator const &it)
+{
+    pos = it.pos;
 }

@@ -116,6 +116,20 @@ TEST_CASE("Copy constructor")
         ss << list2;
         CHECK(ss.str() == "");
     }
+    SECTION("Changes only the copy")
+    {
+        stringstream ss{};
+        stringstream ss2{};
+        List list{1,3,5};
+        List list2{list};
+        list2.insert(10);
+        list2.remove(0);
+        list.remove(0);
+        ss << list;
+        ss2 << list2;
+        CHECK(ss.str() == "3 5");
+        CHECK(ss2.str() == "3 5 10");
+    }
 }
 
 TEST_CASE("Copy operator")
@@ -135,6 +149,21 @@ TEST_CASE("Copy operator")
         ss << list2;
         CHECK(ss.str() == "");
     }
+
+    SECTION("Changes only the copy")
+    {
+        stringstream ss{};
+        stringstream ss2{};
+        List list{1,3,5};
+        List list2 = list;
+        list2.insert(10);
+        list2.remove(0);
+        list.remove(0);
+        ss << list;
+        ss2 << list2;
+        CHECK(ss.str() == "3 5");
+        CHECK(ss2.str() == "3 5 10");
+    }
 }
 
 TEST_CASE("Move constructor")
@@ -153,6 +182,18 @@ TEST_CASE("Move constructor")
         List list2{std::move(list)};
         ss << list2;
         CHECK(ss.str() == "");
+    }
+    SECTION("Extra Tests")
+    {
+        stringstream ss{};
+        stringstream ss2{};
+        List list{1,3,5};
+        List list2{std::move(list)};
+        list2.insert(10);
+        list2.remove(0);
+        ss << list2;
+        CHECK(ss.str() == "3 5 10");
+
     }
 }
 
@@ -188,11 +229,17 @@ TEST_CASE("Index operator")
         List list{1,2,3,4,5};
         CHECK_THROWS(list[7]);
     }
-
-
-
 }
 
+TEST_CASE("List_Iterator init")
+{
+    List::List_iterator{};
+    //List list{1,2,3,4,5};
+    //List_iterator = list.begin();
+
+    //List::List_iterator it{};
+
+}
 #if 0
 
 #endif
