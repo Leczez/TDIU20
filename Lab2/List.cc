@@ -177,12 +177,14 @@ ostream& operator<<(ostream& os, List const& l)
 List::List_iterator List::begin()
 {
     List_iterator temp{};
-    //temp.pos = first;
+    temp.pos = reinterpret_cast<List::List_iterator::Element*>(first);
     return temp;
 }
 List::List_iterator List::end()
 {
-
+    List_iterator temp{};
+    temp.pos = reinterpret_cast<List::List_iterator::Element*>(last);
+    return temp;
 }
 
 

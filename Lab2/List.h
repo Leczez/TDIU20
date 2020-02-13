@@ -19,10 +19,7 @@ public:
     int size();
     friend std::ostream& operator<<(std::ostream& os, List const& l);
 
-    class List_iterator;
-    List_iterator begin(); //t.ex. i Mainprogrammet: List_iterator it = lista.begin();
-    List_iterator end();
-
+    //friend class List_iterator;
     class List_iterator// Användaren ska kunna deklarera objekt av denna typ och kunna: !=, ++ och =
     {
     public:
@@ -36,12 +33,15 @@ public:
         List_iterator(Element* ptr); //HJÄLPFUNKTION
         Element* pos{};
     };
+    List_iterator begin(); //t.ex. i Mainprogrammet: List_iterator it = lista.begin();
+    List_iterator end();
+
 
 private:
     class Element
     {
     public:
-        //friend class List::List_iterator; behövs ej då iteratorklassen automatiskt har tillgång hit då den är nästlad.
+        //friend class List_iterator;// behövs ej då iteratorklassen automatiskt har tillgång hit då den är nästlad.
         Element() = default;
         Element(int N);
         ~Element();
