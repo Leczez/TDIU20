@@ -200,7 +200,7 @@ List::List_iterator List::end()
 {
     List_iterator temp{};
     //temp.pos = reinterpret_cast<List::List_iterator::Element*>(last);
-    temp.pos = last->prev;
+    temp.pos = last;
     return temp;
 }
 
@@ -213,13 +213,13 @@ List::List_iterator::List_iterator(Element* ptr): pos{ptr} //HJÄLPFUNKTION
 
 List::List_iterator& List::List_iterator::operator=(List::List_iterator const &it)
 {
-     pos = it.pos;
-     return *this;
+    pos = it.pos;
+    return *this;
 }
 
 List::List_iterator&  List::List_iterator::operator++()
 {
-    if(pos->next != nullptr)
+    if(pos->next != last)
     {
         pos = pos->next;
         return *this;
@@ -229,6 +229,11 @@ List::List_iterator&  List::List_iterator::operator++()
         throw out_of_range{"Index out of range"};
     }
 }
+List::List_iterator List::List_iterator::operator++(int)
+{
+    return ++*this;
+}
+
 bool List::List_iterator::operator==(List::List_iterator const &it) const
 {
     return (pos == it.pos);

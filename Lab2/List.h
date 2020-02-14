@@ -48,6 +48,7 @@ public:
 
         List_iterator& operator=(List_iterator const &it);
         List_iterator& operator++();
+        List_iterator operator++(int);
         bool operator==(List_iterator const &it) const;
         bool operator!=(List_iterator const &it) const;
         int  operator*() const;
@@ -56,6 +57,8 @@ public:
     private:
         List_iterator(Element* ptr); //HJÄLPFUNKTION
         Element* pos{};
+        Element* first{first};
+        Element* last{last};
     };
     List_iterator begin(); //t.ex. i Mainprogrammet: List_iterator it = lista.begin();
     List_iterator end();

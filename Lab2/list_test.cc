@@ -307,6 +307,7 @@ TEST_CASE("List_Iterator init")
         List lista{2,5,7};
         for(List::List_iterator it = lista.begin(); it != lista.end(); ++it)
         {
+            cerr << *it << " ";
             ss << *it << " ";
         }
         CHECK(ss.str() == "2 5 7 ");
