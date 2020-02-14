@@ -212,5 +212,6 @@ List::List_iterator::List_iterator(Element* ptr): pos{ptr} //HJÄLPFUNKTION
 
 List::List_iterator& List::List_iterator::operator=(List::List_iterator const &it)
 {
-    pos = it.pos;
+     pos = it.pos;
+     return (*this);
 }

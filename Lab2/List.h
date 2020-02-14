@@ -28,6 +28,7 @@ public:
         List_iterator();
 
         List_iterator& operator=(List_iterator const &it);
+        bool operator!=(List_iterator const &it) const;
 
     private:
         List_iterator(Element* ptr); //HJÄLPFUNKTION
@@ -41,7 +42,6 @@ private:
     class Element
     {
     public:
-        //friend class List_iterator;// behövs ej då iteratorklassen automatiskt har tillgång hit då den är nästlad.
         Element() = default;
         Element(int N);
         ~Element();

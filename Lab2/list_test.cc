@@ -234,7 +234,14 @@ TEST_CASE("Index operator")
 TEST_CASE("List_Iterator init")
 {
     List::List_iterator{};
-    //List list{1,2,3,4,5};
+
+    SECTION("Operator =")
+    {
+        List list{1,2,3,4,5};
+        List::List_iterator it{};
+        it = list.begin();
+    }
+    //
     //List_iterator = list.begin();
 
     //List::List_iterator it{};
