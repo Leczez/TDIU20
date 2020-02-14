@@ -85,15 +85,8 @@ TEST_CASE ("Convert to string" )
 TEST_CASE ("Operator +")
 {
     Time t{0,0,0};
-    t = t + 3;
-    CHECK(t.to_string() == "00:00:03");
-    t = t + 3660+ 24*3600;
-    CHECK(t.to_string() == "01:01:03");
-
-    Time t2{0,0,0};
-    t2 = t2 +(-10);
-    CHECK(t2.to_string() == "23:59:50");
-
+    CHECK((t + 3).to_string() == "00:00:03");
+    CHECK(t.to_string() == "00:00:00");
 }
 
 TEST_CASE ("Operator ++")
@@ -118,12 +111,10 @@ TEST_CASE (" ++ Operator ")
 TEST_CASE("Operator -")
 {
     Time t{0,0,0};
-    t = t -(-3);
-    CHECK(t.to_string() == "00:00:03");
+    //t = t -(-3);
+    CHECK((t-3).to_string() == "23:59:57");
 
-    Time t2{0,0,5};
-    t2 = t2 - 1;
-    CHECK(t2.to_string() == "00:00:04");
+    CHECK(t.to_string() == "00:00:00");
 
 }
 
@@ -181,8 +172,10 @@ TEST_CASE ("Input operator" )
     {
         Time t{};
         ss << "02:05:01";
+        CHECK(ss.eof() == false);
         ss >> t;
         CHECK(t.to_string() == "02:05:01");
+        CHECK(ss.eof());
     }
 
     SECTION("Chained input")
@@ -191,7 +184,9 @@ TEST_CASE ("Input operator" )
 
         Time t3{};
         ss << "23:23:23" << " " << "12:12:12";
+        CHECK(ss.eof() == false);
         ss >> t2 >> t3;
+        CHECK(ss.eof());
         CHECK(t2.to_string() == "23:23:23");
         CHECK(t3.to_string() == "12:12:12");
     }

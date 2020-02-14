@@ -223,14 +223,8 @@ bool Time::operator==(Time const &t) const
 
 bool Time::operator!=(Time const &t) const
 {
-    if(hour != t.hour || minute != t.minute || second != t.second)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return !(*this == t);
+
 }
 
 
@@ -263,28 +257,7 @@ bool Time::operator<(Time const &t) const
 
 bool Time::operator>(Time const &t) const
 {
-    if(hour > t.hour)
-    {
-        return true;
-    }
-    else
-    {
-        if(hour == t.hour && minute > t.minute)
-        {
-            return true;
-        }
-        else
-        {
-            if(hour == t.hour && minute == t.minute && second > t.second)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+    return !(*this < t);
 }
 
 
@@ -338,21 +311,10 @@ int Time::get_second() const
 
 // TODO: Ni måste kolla så det blir ett rimligt tal även med set. Som
 // det ser ut nu så kan man skapa felaktiga tider.
-void Time::set_hour(int const n)
-{
-    hour = n;
-}
 
-void Time::set_minute(int const n)
-{
-    minute = n;
-}
-
-void Time::set_second(int const n)
-{
-   second = n;
-}
-
+// Vi löste detta genom att ta bort de eftersom att de inte används.
+// Vi hade egentligen bara glömt att ta bort de efter att vi kände oss klara.
+// (angående set funktionerna).
 
 ostream& operator<<(ostream &os, Time const &t)
 {
