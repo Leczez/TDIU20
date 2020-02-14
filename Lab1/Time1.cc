@@ -257,7 +257,7 @@ bool Time::operator<(Time const &t) const
 
 bool Time::operator>(Time const &t) const
 {
-    return !(*this < t);
+    return (t < *this);
 }
 
 

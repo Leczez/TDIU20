@@ -137,6 +137,25 @@ TEST_CASE(" -- Operator ")
     CHECK(t2.to_string() == "23:59:59");
 }
 
+TEST_CASE(" Boolean operators")
+{
+    Time t1{0,0,0};
+    Time t2{23,59,59};
+    Time t3 = t2;
+
+    CHECK(t1 < t2);
+    CHECK(t2 > t1);
+    CHECK_FALSE(t2 > t3);
+    CHECK_FALSE(t2 < t3);
+    CHECK(t2 == t3);
+    CHECK(t2 != t1);
+    CHECK(t1 <= t2);
+    CHECK(t2 >= t1);
+    CHECK(t2 <= t3);
+    CHECK(t2 >= t3);
+
+}
+
 TEST_CASE ("Conversion to string" )
 {
     CHECK( string(Time{2,4,1}) == "02:04:01" );
