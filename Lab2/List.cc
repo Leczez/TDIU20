@@ -174,20 +174,6 @@ ostream& operator<<(ostream& os, List const& l)
     return os;
 }
 
-List::List_iterator List::begin()
-{
-    List_iterator temp{};
-    temp.pos = reinterpret_cast<List::List_iterator::Element*>(first);
-    return temp;
-}
-List::List_iterator List::end()
-{
-    List_iterator temp{};
-    temp.pos = reinterpret_cast<List::List_iterator::Element*>(last);
-    return temp;
-}
-
-
 List::Element::Element(int N):
 value{N}
 {}
@@ -203,6 +189,21 @@ List::Element::~Element()
     }
 }
 
+List::List_iterator List::begin()
+{
+    List_iterator temp{};
+    //temp.pos = reinterpret_cast<List::List_iterator::Element*>(first);
+    temp.pos = first->next;
+    return temp;
+}
+List::List_iterator List::end()
+{
+    List_iterator temp{};
+    //temp.pos = reinterpret_cast<List::List_iterator::Element*>(last);
+    temp.pos = last->prev;
+    return temp;
+}
+
 
 List::List_iterator::List_iterator(): pos{nullptr}
 {}
@@ -213,5 +214,32 @@ List::List_iterator::List_iterator(Element* ptr): pos{ptr} //HJÄLPFUNKTION
 List::List_iterator& List::List_iterator::operator=(List::List_iterator const &it)
 {
      pos = it.pos;
-     return (*this);
+     return *this;
+}
+
+List::List_iterator&  List::List_iterator::operator++()
+{
+    if(pos->next != nullptr)
+    {
+        pos = pos->next;
+        return *this;
+    }
+    else
+    {
+        throw out_of_range{"Index out of range"};
+    }
+}
+bool List::List_iterator::operator==(List::List_iterator const &it) const
+{
+    return (pos == it.pos);
+}
+
+bool List::List_iterator::operator!=(List::List_iterator const &it) const
+{
+    return (pos != it.pos);
+}
+
+int  List::List_iterator::operator*() const
+{
+    return pos->value;
 }

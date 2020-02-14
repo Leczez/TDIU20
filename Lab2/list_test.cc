@@ -241,11 +241,76 @@ TEST_CASE("List_Iterator init")
         List::List_iterator it{};
         it = list.begin();
     }
-    //
-    //List_iterator = list.begin();
 
-    //List::List_iterator it{};
+    SECTION("Operator ==")
+    {
+        List list{1,2,3,4,5};
+        List list2{4,5,6,7,8};
 
+        List::List_iterator itA{};
+        List::List_iterator itB{};
+        itA = list.begin();
+        itB = list.begin();
+
+        CHECK( itA == itB );
+
+        List::List_iterator itC{};
+
+        itC = list2.begin();
+        CHECK( ((itA == itC) == false) );
+    }
+
+    SECTION("Operator !=")
+    {
+        List list{1,2,3,4,5};
+        List list2{4,5,6,7,8};
+
+        List::List_iterator itA{};
+        List::List_iterator itB{};
+        itA = list.begin();
+        itB = list.begin();
+
+        CHECK( ((itA != itB) == false) );
+
+        List::List_iterator itC{};
+
+        itC = list2.begin();
+        CHECK( itA != itC );
+    }
+    SECTION("operator*")
+    {
+        List list{1,2,3,4,5};
+        List::List_iterator itA = list.begin();
+        CHECK(*itA == 1);
+        itA = list.end();
+        CHECK(*itA == 5);
+
+    }
+    SECTION("++operator")
+    {
+        List list{1,2,3,4,5};
+        List::List_iterator itA = list.begin();
+        CHECK(*itA == 1);
+        ++itA;
+        CHECK(*itA == 2);
+        ++itA;
+        CHECK(*itA == 3);
+        ++itA;
+        CHECK(*itA == 4);
+        ++itA;
+        CHECK(*itA == 5);
+        CHECK_THROWS(++itA);
+    }
+    SECTION("FOR-LOOP")
+    {
+        ostringstream ss;
+        List lista{2,5,7};
+        for(List::List_iterator it = lista.begin(); it != lista.end(); ++it)
+        {
+            ss << *it << " ";
+        }
+        CHECK(ss.str() == "2 5 7 ");
+    }
 }
 #if 0
 
