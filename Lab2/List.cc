@@ -219,14 +219,14 @@ List::List_iterator& List::List_iterator::operator=(List::List_iterator const &i
 
 List::List_iterator&  List::List_iterator::operator++()
 {
-    if(pos->next != last)
+    if(pos->next == last)
     {
-        pos = pos->next;
-        return *this;
+        throw out_of_range{"Index out of range"};
     }
     else
     {
-        throw out_of_range{"Index out of range"};
+        pos = pos->next;
+        return *this;
     }
 }
 List::List_iterator List::List_iterator::operator++(int)

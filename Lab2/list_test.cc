@@ -282,8 +282,6 @@ TEST_CASE("List_Iterator init")
         List list{1,2,3,4,5};
         List::List_iterator itA = list.begin();
         CHECK(*itA == 1);
-        itA = list.end();
-        CHECK(*itA == 5);
 
     }
     SECTION("++operator")
@@ -300,6 +298,7 @@ TEST_CASE("List_Iterator init")
         ++itA;
         CHECK(*itA == 5);
         CHECK_THROWS(++itA);
+        cerr << *itA << endl;
     }
     SECTION("FOR-LOOP")
     {
@@ -307,7 +306,6 @@ TEST_CASE("List_Iterator init")
         List lista{2,5,7};
         for(List::List_iterator it = lista.begin(); it != lista.end(); ++it)
         {
-            cerr << *it << " ";
             ss << *it << " ";
         }
         CHECK(ss.str() == "2 5 7 ");
