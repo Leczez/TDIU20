@@ -1,3 +1,5 @@
+#ifndef LIST_H
+#define LIST_H
 #include <iostream>
 #include <initializer_list>
 
@@ -15,7 +17,6 @@ private:
         Element& operator=(Element const &) = default;
         Element& operator=(Element &&) = default;
 
-
         Element* next{nullptr};
         Element* prev{nullptr};
         int value{};
@@ -23,6 +24,7 @@ private:
 
     Element* first{};
     Element* last{};
+
 public:
     List();
     ~List();
@@ -33,34 +35,31 @@ public:
     List& operator=(List const &l);
     List& operator=(List &&l) noexcept;
 
-    int operator[](int index);
+    int operator[](int index) const;
     void insert(int const N) const;
     void remove(int const N) const;
-    int size();
+    int size() const;
     friend std::ostream& operator<<(std::ostream& os, List const& l);
 
-    class List_iterator// Användaren ska kunna deklarera objekt av denna typ och kunna: !=, ++ och =
+    class List_iterator
     {
     public:
-        friend class List; // Nu bör List komma åt allt i private hos List_iterator
+        friend class List;
 
         List_iterator();
-
         List_iterator& operator=(List_iterator const &it);
         List_iterator& operator++();
-        List_iterator operator++(int);
         bool operator==(List_iterator const &it) const;
         bool operator!=(List_iterator const &it) const;
         int  operator*() const;
 
-
     private:
-        List_iterator(Element* ptr); //HJÄLPFUNKTION
         Element* pos{};
         Element* first{first};
         Element* last{last};
     };
-    List_iterator begin(); //t.ex. i Mainprogrammet: List_iterator it = lista.begin();
-    List_iterator end();
 
+    List_iterator begin() const;
+    List_iterator end() const;
 };
+#endif

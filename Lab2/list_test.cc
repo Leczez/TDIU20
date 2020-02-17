@@ -231,9 +231,12 @@ TEST_CASE("Index operator")
     }
 }
 
-TEST_CASE("List_Iterator init")
+TEST_CASE("List_Iterator")
 {
-    List::List_iterator{};
+    SECTION("Empty Constructor")
+    {
+        List::List_iterator{};
+    }
 
     SECTION("Operator =")
     {
@@ -257,7 +260,7 @@ TEST_CASE("List_Iterator init")
         List::List_iterator itC{};
 
         itC = list2.begin();
-        CHECK( ((itA == itC) == false) );
+        CHECK_FALSE( itA == itC );
     }
 
     SECTION("Operator !=")
@@ -269,19 +272,21 @@ TEST_CASE("List_Iterator init")
         List::List_iterator itB{};
         itA = list.begin();
         itB = list.begin();
-
-        CHECK( ((itA != itB) == false) );
+        CHECK_FALSE( itA != itB );
 
         List::List_iterator itC{};
-
         itC = list2.begin();
         CHECK( itA != itC );
     }
+
     SECTION("operator*")
     {
         List list{1,2,3,4,5};
         List::List_iterator itA = list.begin();
         CHECK(*itA == 1);
+
+        List::List_iterator itB = list.end();
+        CHECK_THROWS(*itB);
 
     }
     SECTION("++operator")
@@ -297,9 +302,13 @@ TEST_CASE("List_Iterator init")
         CHECK(*itA == 4);
         ++itA;
         CHECK(*itA == 5);
-        CHECK_THROWS(++itA);
-        cerr << *itA << endl;
+        ++itA; //VALID SINCE WE ADVANCE OUR LIST TO THE END SENTINEL
+        CHECK_THROWS(++itA); // NOT VALID SINCE WE ARE AT THE END SENTINEL AND TRY TO ADVANCE
+
+        List::List_iterator itB = list.end(); //SAME AS THE ABOVE TEST
+        CHECK_THROWS(++itB);
     }
+
     SECTION("FOR-LOOP")
     {
         ostringstream ss;
@@ -310,7 +319,19 @@ TEST_CASE("List_Iterator init")
         }
         CHECK(ss.str() == "2 5 7 ");
     }
+
+    SECTION("EMPTY FOR-LOOP")
+    {
+        ostringstream ss;
+        List lista{};
+        for(List::List_iterator it = lista.begin(); it != lista.end(); ++it)
+        {
+            ss << *it << " ";
+        }
+        CHECK(ss.str() == "");
+    }
 }
+
 #if 0
 
 #endif
