@@ -111,11 +111,8 @@ TEST_CASE (" ++ Operator ")
 TEST_CASE("Operator -")
 {
     Time t{0,0,0};
-    //t = t -(-3);
     CHECK((t-3).to_string() == "23:59:57");
-
     CHECK(t.to_string() == "00:00:00");
-
 }
 
 
