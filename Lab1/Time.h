@@ -1,7 +1,7 @@
 // Denna fil ska innehålla deklarationer för de typer och funktioner
 // som behövs
-#ifndef CARD_H
-#define CARD_H
+#ifndef TIME_H
+#define TIME_H
 #include <string>
 #include <iostream>
 
