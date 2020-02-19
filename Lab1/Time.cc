@@ -110,7 +110,7 @@ void Time::format_into_ostream (int const n, ostream &os) const
 }
 
 
-Time Time::operator+(int const n)
+Time Time::operator+(int const n) const
 {
     Time temp{hour, minute, second};
     if(n < 0)
@@ -159,7 +159,7 @@ Time& Time::operator++()
 }
 
 
-Time Time::operator-(int const n)
+Time Time::operator-(int const n) const
 {
     Time temp{hour, minute, second};
 
@@ -263,8 +263,7 @@ bool Time::operator>(Time const &t) const
 
 bool Time::operator<=(Time const &t) const
 {
-    Time temp{*this};
-    if(temp < t || temp == t)
+    if(*this < t || *this == t)
     {
         return true;
     }
@@ -277,8 +276,7 @@ bool Time::operator<=(Time const &t) const
 
 bool Time::operator>=(Time const &t) const
 {
-    Time temp{*this};
-    if(temp > t || temp == t)
+    if(*this > t || *this == t)
     {
         return true;
     }

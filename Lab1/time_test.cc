@@ -87,6 +87,8 @@ TEST_CASE ("Operator +")
     Time t{0,0,0};
     CHECK((t + 3).to_string() == "00:00:03");
     CHECK(t.to_string() == "00:00:00");
+    CHECK((t + 5+24*3600).to_string() == "00:00:05");
+    CHECK(t.to_string() == "00:00:00");
 }
 
 TEST_CASE ("Operator ++")
@@ -113,6 +115,8 @@ TEST_CASE("Operator -")
     Time t{0,0,0};
     CHECK((t-3).to_string() == "23:59:57");
     CHECK(t.to_string() == "00:00:00");
+    CHECK((t - 5-24*3600).to_string() == "23:59:55");
+    CHECK(t.to_string() == "00:00:00");
 }
 
 
@@ -136,6 +140,8 @@ TEST_CASE(" -- Operator ")
 
 TEST_CASE(" Boolean operators")
 {
+    SECTION("1")
+    {
     Time t1{0,0,0};
     Time t2{23,59,59};
     Time t3 = t2;
@@ -150,7 +156,61 @@ TEST_CASE(" Boolean operators")
     CHECK(t2 >= t1);
     CHECK(t2 <= t3);
     CHECK(t2 >= t3);
+    }
 
+    SECTION("2")
+    {
+    Time t1{0,0,0};
+    Time t2{0,0,2};
+    Time t3 = t2;
+
+    CHECK(t1 < t2);
+    CHECK(t2 > t1);
+    CHECK_FALSE(t2 > t3);
+    CHECK_FALSE(t2 < t3);
+    CHECK(t2 == t3);
+    CHECK(t2 != t1);
+    CHECK(t1 <= t2);
+    CHECK(t2 >= t1);
+    CHECK(t2 <= t3);
+    CHECK(t2 >= t3);
+    }
+
+    SECTION("3")
+    {
+    Time t1{0,0,0};
+    Time t2{0,1,0};
+    Time t3 = t2;
+
+    CHECK(t1 < t2);
+    CHECK(t2 > t1);
+    CHECK_FALSE(t2 > t3);
+    CHECK_FALSE(t2 < t3);
+    CHECK(t2 == t3);
+    CHECK(t2 != t1);
+    CHECK(t1 <= t2);
+    CHECK(t2 >= t1);
+    CHECK(t2 <= t3);
+    CHECK(t2 >= t3);
+    }
+
+    SECTION("4")
+    {
+    Time t1{0,0,0};
+    Time t2{1,0,0};
+    Time t3 = t2;
+
+    CHECK(t1 < t2);
+    CHECK(t2 > t1);
+    CHECK_FALSE(t2 > t3);
+    CHECK_FALSE(t2 < t3);
+    CHECK(t2 == t3);
+    CHECK(t2 != t1);
+    CHECK(t1 <= t2);
+    CHECK(t2 >= t1);
+    CHECK(t2 <= t3);
+    CHECK(t2 >= t3);
+    }
 }
 
 TEST_CASE ("Conversion to string" )
@@ -214,7 +274,7 @@ TEST_CASE ("Input operator" )
         ss << "23:23:23";
         ss >> t1;
         CHECK(t1.to_string() == "23:23:23");
-        CHECK(!ss.fail());
+        CHECK_FALSE(ss.fail());
         Time t2{};
         ss << "25:23:23";
         ss >> t2;

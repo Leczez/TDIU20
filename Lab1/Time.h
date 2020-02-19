@@ -20,10 +20,10 @@ public:
     std::string to_string( const bool = false) const;
     operator std::string() const;
 
-    Time operator+(int const n);
+    Time operator+(int const n) const;
     Time operator++(int);
     Time& operator++();
-    Time operator-(int const n);
+    Time operator-(int const n) const;
     Time operator--(int);
     Time& operator--();
 
