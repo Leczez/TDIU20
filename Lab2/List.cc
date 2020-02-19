@@ -15,8 +15,17 @@ List::List()
 
 List::~List()
 {
-    delete first;
-    delete last;
+    if(first != nullptr && last != nullptr)
+    {
+        Element* temp{first->next};
+        while(temp != last)
+        {
+            temp = temp->next;
+            delete temp->prev;
+        }
+        delete first;
+        delete last;
+    }
 }
 
 
@@ -27,26 +36,13 @@ List::List(initializer_list<int> const &data)
     last->prev = first;
     first->next = last;
 
-    vector<int> input{data};
-    for(unsigned int i{};i < input.size();i++)
+    vector<int> vector_data{data};
+    for(unsigned int i{};i < vector_data.size();i++)
     {
-        insert(input[i]);
+        insert(vector_data[i]);
     }
 }
-/*
-List::List(initializer_list<int> const &data)
-{
-    last = new Element{};
-    first = new Element{};
-    last->prev = first;
-    first->next = last;
 
-    for(size_t i{};i < data.size();i++)
-    {
-        insert(*(data.begin()+i));
-    }
-}
-*/
 
 List::List(List const &l)
 {
@@ -64,7 +60,7 @@ List::List(List const &l)
 }
 
 
-List::List(List &&l) noexcept
+List::List(List &&l)
 {
     last  = std::exchange(l.last, nullptr);
     first = std::exchange(l.first, nullptr);
@@ -83,11 +79,12 @@ List& List::operator=(List const &l)
 }
 
 
-List& List::operator=(List &&l) noexcept
+List& List::operator=(List &&l)
 {
-    last  = std::exchange(l.last, nullptr);
-    first = std::exchange(l.first, nullptr);
+    last  = std::exchange(l.last, last);
+    first = std::exchange(l.first, first);
     return *this;
+
 }
 
 
@@ -163,9 +160,6 @@ void List::remove(int const N) const
     }
     temp->next->prev = temp->prev;
     temp->prev->next = temp->next;
-
-    temp->next = nullptr;
-    temp->prev = nullptr;
     delete temp;
 }
 
@@ -186,22 +180,8 @@ ostream& operator<<(ostream& os, List const& l)
 }
 
 
-
-List::Element::Element(int N):
-value{N}
+List::Element::Element(int N): value{N}
 {}
-
-
-List::Element::~Element()
-{
-    if(this->next != nullptr)
-    {
-        if(this->next->next != nullptr)
-        {
-            delete this->next;
-        }
-    }
-}
 
 
 List::List_iterator List::begin() const
@@ -252,7 +232,11 @@ bool List::List_iterator::operator!=(List::List_iterator const &it) const
 
 int List::List_iterator::operator*() const
 {
-    if(pos->next == nullptr)
+    if(pos == nullptr)
+    {
+        throw out_of_range{"Uninitiated List_iterator"};
+    }
+    else if(pos->next == nullptr)
     {
         throw out_of_range{"Index out of range"};
     }

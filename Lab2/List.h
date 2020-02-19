@@ -11,7 +11,7 @@ private:
     public:
         Element() = default;
         Element(int N);
-        ~Element();
+        ~Element() = default;
         Element(Element const &) = delete;
         Element(Element &&) = delete;
         Element& operator=(Element const &) = delete;
@@ -30,10 +30,10 @@ public:
     ~List();
     List(std::initializer_list<int> const &data);
     List(List const &l);
-    List(List &&l) noexcept;
+    List(List &&l);
 
     List& operator=(List const &l);
-    List& operator=(List &&l) noexcept;
+    List& operator=(List &&l);
 
     int operator[](int const index) const;
     void insert(int const N) const;

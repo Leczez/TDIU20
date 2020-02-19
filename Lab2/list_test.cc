@@ -72,22 +72,18 @@ TEST_CASE("Remove function")
 
 }
 
-TEST_CASE("Initilizer constructor")
+TEST_CASE("Initalizer constructor")
 {
     stringstream ss{};
-
     List list{5,4,10};
-
     ss << list;
     CHECK(ss.str() == "4 5 10");
-
 }
 
 TEST_CASE("Listsize")
 {
-    stringstream ss{};
-
     List list{5,4,10};
+    CHECK(list.size() == 3);
     list.insert(1);
     CHECK(list.size() == 4);
     list.remove(0);
@@ -99,6 +95,11 @@ TEST_CASE("Listsize")
     list.remove(0);
     CHECK(list.size() == 0);
 
+    SECTION("EMPTY LIST")
+    {
+        List list{};
+        CHECK(list.size() == 0);
+    }
 
 }
 
@@ -186,10 +187,11 @@ TEST_CASE("Move constructor")
         ss << list2;
         CHECK(ss.str() == "");
     }
+
+
     SECTION("Extra Tests")
     {
         stringstream ss{};
-        stringstream ss2{};
         List list{1,3,5};
         List list2{std::move(list)};
         list2.insert(10);
@@ -205,7 +207,8 @@ TEST_CASE("Move operator")
     stringstream ss{};
 
     List list{5,4,10};
-    List list2 = std::move(list);
+    List list2{};
+    list2 = std::move(list);
     ss << list2;
     CHECK(ss.str() == "4 5 10");
 
@@ -213,10 +216,25 @@ TEST_CASE("Move operator")
     {
         stringstream ss{};
         List list{};
-        List list2 = std::move(list);
+        List list2;
+        list2 = std::move(list);
         ss << list2;
         CHECK(ss.str() == "");
     }
+
+    SECTION("Extra Tests")
+    {
+        stringstream ss{};
+        List list{1,3,5};
+        List list2;
+        list2 = std::move(list);
+        list2.insert(10);
+        list2.remove(0);
+        ss << list2;
+        CHECK(ss.str() == "3 5 10");
+
+    }
+
 }
 
 TEST_CASE("Index operator")
@@ -230,7 +248,13 @@ TEST_CASE("Index operator")
     SECTION("Check for Index out of bounds!")
     {
         List list{1,2,3,4,5};
-        CHECK_THROWS(list[7]);
+        CHECK_THROWS(list[5]);
+    }
+
+    SECTION("Empty List")
+    {
+        List list{};
+        CHECK_THROWS(list[0]);
     }
 }
 
@@ -257,11 +281,9 @@ TEST_CASE("List_Iterator")
         List::List_iterator itB{};
         itA = list.begin();
         itB = list.begin();
-
         CHECK( itA == itB );
 
         List::List_iterator itC{};
-
         itC = list2.begin();
         CHECK_FALSE( itA == itC );
     }
@@ -289,9 +311,10 @@ TEST_CASE("List_Iterator")
         CHECK(*itA == 1);
 
         List::List_iterator itB = list.end();
-        CHECK_THROWS(*itB);
+        CHECK_THROWS(*itB); //NOT VALID BECAUSE WE TRY TO READ THE LAST SENTINELS VALUE
 
     }
+
     SECTION("++operator")
     {
         List list{1,2,3,4,5};
@@ -310,6 +333,12 @@ TEST_CASE("List_Iterator")
 
         List::List_iterator itB = list.end(); //SAME AS THE ABOVE TEST
         CHECK_THROWS(++itB);
+
+        SECTION("UNINITIATED LIST")
+        {
+            List::List_iterator itA{};
+            CHECK_THROWS(*itA);
+        }
     }
 
     SECTION("FOR-LOOP")
