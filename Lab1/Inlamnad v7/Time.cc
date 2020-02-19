@@ -119,9 +119,7 @@ Time Time::operator+(int const n)
     }
     else
     {
-	// Kommentar: Detta är en mycket seg lösning. Det är godkänt i
-	// detta fall men kan vara bra att tänka på i framtiden.
-	for(int i{}; i < n; i++)
+        for(int i{}; i < n; i++)
         {
           temp++;
         }
@@ -206,8 +204,7 @@ Time& Time::operator--()
     return *this;
 }
 
-// TODO: Implementera endast 2 helst 1 av jämförelseoperatorerna och
-// återanvänd den/dem i implementationen av de andra.
+
 bool Time::operator==(Time const &t) const
 {
     if(hour == t.hour && minute == t.minute && second == t.second)
@@ -223,8 +220,14 @@ bool Time::operator==(Time const &t) const
 
 bool Time::operator!=(Time const &t) const
 {
-    return !(*this == t);
-
+    if(hour != t.hour || minute != t.minute || second != t.second)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 
@@ -257,7 +260,28 @@ bool Time::operator<(Time const &t) const
 
 bool Time::operator>(Time const &t) const
 {
-    return (t < *this);
+    if(hour > t.hour)
+    {
+        return true;
+    }
+    else
+    {
+        if(hour == t.hour && minute > t.minute)
+        {
+            return true;
+        }
+        else
+        {
+            if(hour == t.hour && minute == t.minute && second > t.second)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 
 
@@ -309,12 +333,21 @@ int Time::get_second() const
     return second;
 }
 
-// TODO: Ni måste kolla så det blir ett rimligt tal även med set. Som
-// det ser ut nu så kan man skapa felaktiga tider.
+void Time::set_hour(int const n)
+{
+    hour = n;
+}
 
-// Vi löste detta genom att ta bort de eftersom att de inte används.
-// Vi hade egentligen bara glömt att ta bort de efter att vi kände oss klara.
-// (angående set funktionerna).
+void Time::set_minute(int const n)
+{
+    minute = n;
+}
+
+void Time::set_second(int const n)
+{
+   second = n;
+}
+
 
 ostream& operator<<(ostream &os, Time const &t)
 {

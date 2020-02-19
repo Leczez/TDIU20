@@ -15,6 +15,9 @@ public:
     int get_hour() const;
     int get_minute() const;
     int get_second() const;
+    void set_hour(int const n);
+    void set_minute(int const n);
+    void set_second(int const n);
 
     bool is_am() const;
     std::string to_string( const bool = false) const;

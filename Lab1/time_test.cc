@@ -80,19 +80,13 @@ TEST_CASE ("Convert to string" )
 
 }
 
-
+// TODO: Testa så inte operator+ ändrar på objektet. Nu vet vi inte om
+// det är + eller = som kommer att ändra på objektet.
 TEST_CASE ("Operator +")
 {
     Time t{0,0,0};
-    t = t + 3;
-    CHECK(t.to_string() == "00:00:03");
-    t = t + 3660+ 24*3600;
-    CHECK(t.to_string() == "01:01:03");
-
-    Time t2{0,0,0};
-    t2 = t2 +(-10);
-    CHECK(t2.to_string() == "23:59:50");
-
+    CHECK((t + 3).to_string() == "00:00:03");
+    CHECK(t.to_string() == "00:00:00");
 }
 
 TEST_CASE ("Operator ++")
@@ -112,16 +106,13 @@ TEST_CASE (" ++ Operator ")
     CHECK(t2.to_string() == "00:00:01");
 
 }
+
+// TODO: Samma som på operator+
 TEST_CASE("Operator -")
 {
     Time t{0,0,0};
-    t = t -(-3);
-    CHECK(t.to_string() == "00:00:03");
-
-    Time t2{0,0,5};
-    t2 = t2 - 1;
-    CHECK(t2.to_string() == "00:00:04");
-
+    CHECK((t-3).to_string() == "23:59:57");
+    CHECK(t.to_string() == "00:00:00");
 }
 
 
@@ -141,6 +132,25 @@ TEST_CASE(" -- Operator ")
     t2 = --t;
     CHECK(t.to_string() == "23:59:59");
     CHECK(t2.to_string() == "23:59:59");
+}
+
+TEST_CASE(" Boolean operators")
+{
+    Time t1{0,0,0};
+    Time t2{23,59,59};
+    Time t3 = t2;
+
+    CHECK(t1 < t2);
+    CHECK(t2 > t1);
+    CHECK_FALSE(t2 > t3);
+    CHECK_FALSE(t2 < t3);
+    CHECK(t2 == t3);
+    CHECK(t2 != t1);
+    CHECK(t1 <= t2);
+    CHECK(t2 >= t1);
+    CHECK(t2 <= t3);
+    CHECK(t2 >= t3);
+
 }
 
 TEST_CASE ("Conversion to string" )
@@ -169,6 +179,8 @@ TEST_CASE ("Output operator" )
         CHECK(ss.str() == "23:23:23");
     }
 }
+
+// TODO: Testa vad som finns i strömmen efter läsning.
 TEST_CASE ("Input operator" )
 {
     stringstream ss;
@@ -176,8 +188,10 @@ TEST_CASE ("Input operator" )
     {
         Time t{};
         ss << "02:05:01";
+        CHECK(ss.eof() == false);
         ss >> t;
         CHECK(t.to_string() == "02:05:01");
+        CHECK(ss.eof());
     }
 
     SECTION("Chained input")
@@ -186,7 +200,9 @@ TEST_CASE ("Input operator" )
 
         Time t3{};
         ss << "23:23:23" << " " << "12:12:12";
+        CHECK(ss.eof() == false);
         ss >> t2 >> t3;
+        CHECK(ss.eof());
         CHECK(t2.to_string() == "23:23:23");
         CHECK(t3.to_string() == "12:12:12");
     }
