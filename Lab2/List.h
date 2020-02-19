@@ -12,10 +12,10 @@ private:
         Element() = default;
         Element(int N);
         ~Element();
-        Element(Element const &) = default;
-        Element(Element &&) = default;
-        Element& operator=(Element const &) = default;
-        Element& operator=(Element &&) = default;
+        Element(Element const &) = delete;
+        Element(Element &&) = delete;
+        Element& operator=(Element const &) = delete;
+        Element& operator=(Element &&) = delete;
 
         Element* next{nullptr};
         Element* prev{nullptr};
@@ -28,14 +28,14 @@ private:
 public:
     List();
     ~List();
-    List(std::initializer_list<int> input);
+    List(std::initializer_list<int> const &data);
     List(List const &l);
     List(List &&l) noexcept;
 
     List& operator=(List const &l);
     List& operator=(List &&l) noexcept;
 
-    int operator[](int index) const;
+    int operator[](int const index) const;
     void insert(int const N) const;
     void remove(int const N) const;
     int size() const;
@@ -45,9 +45,9 @@ public:
     {
     public:
         friend class List;
+        List_iterator() = default;
+        List_iterator& operator=(List_iterator const &) = default;
 
-        List_iterator();
-        List_iterator& operator=(List_iterator const &it);
         List_iterator& operator++();
         bool operator==(List_iterator const &it) const;
         bool operator!=(List_iterator const &it) const;
@@ -55,8 +55,6 @@ public:
 
     private:
         Element* pos{};
-        Element* first{first};
-        Element* last{last};
     };
 
     List_iterator begin() const;

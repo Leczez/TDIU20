@@ -22,8 +22,11 @@ TEST_CASE ("Default constructor")
 
 TEST_CASE("Single Insert")
 {
+    stringstream ss{};
     List list{};
     list.insert(10);
+    ss << list;
+    CHECK(ss.str() == "10");
 }
 
 TEST_CASE("Multiple Inserts")

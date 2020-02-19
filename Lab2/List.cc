@@ -20,7 +20,7 @@ List::~List()
 }
 
 
-List::List(initializer_list<int> data)
+List::List(initializer_list<int> const &data)
 {
     last = new Element{};
     first = new Element{};
@@ -33,7 +33,20 @@ List::List(initializer_list<int> data)
         insert(input[i]);
     }
 }
+/*
+List::List(initializer_list<int> const &data)
+{
+    last = new Element{};
+    first = new Element{};
+    last->prev = first;
+    first->next = last;
 
+    for(size_t i{};i < data.size();i++)
+    {
+        insert(*(data.begin()+i));
+    }
+}
+*/
 
 List::List(List const &l)
 {
@@ -60,7 +73,6 @@ List::List(List &&l) noexcept
 
 List& List::operator=(List const &l)
 {
-
     Element* temp{l.first};
     while(temp->next != l.last)
     {
@@ -92,7 +104,7 @@ int List::size() const
 }
 
 
-int List::operator[](int index) const
+int List::operator[](int const index) const
 {
     Element* temp{first};
     for(int i{};i < index + 1;i++)
@@ -208,18 +220,6 @@ List::List_iterator List::end() const
 }
 
 
-
-List::List_iterator::List_iterator(): pos{nullptr}
-{}
-
-
-List::List_iterator& List::List_iterator::operator=(List::List_iterator const &it)
-{
-    pos = it.pos;
-    return *this;
-}
-
-
 List::List_iterator&  List::List_iterator::operator++()
 {
     if(pos == nullptr)
@@ -250,7 +250,7 @@ bool List::List_iterator::operator!=(List::List_iterator const &it) const
 }
 
 
-int  List::List_iterator::operator*() const
+int List::List_iterator::operator*() const
 {
     if(pos->next == nullptr)
     {
