@@ -121,29 +121,16 @@ void List::insert(int const N) const
     Element* temp{first->next};
     Element* new_box = new Element{N};
 
-    while(temp != last || temp->prev == first)
+    while(temp != last && temp->value <= N)
     {
-        if(N <= temp->value || temp == last)
-        {
-            new_box->next = temp;
-            new_box->prev = temp->prev;
-            temp->prev->next = new_box;
-            temp->prev = new_box;
-
-            temp = last;
-        }
-        else
-        {
-            temp = temp->next;
-            if(temp == last)
-            {
-                new_box->next = temp;
-                new_box->prev = temp->prev;
-                temp->prev->next = new_box;
-                temp->prev = new_box;
-            }
-        }
+        temp = temp->next;
     }
+    new_box->next = temp;
+    new_box->prev = temp->prev;
+    temp->prev->next = new_box;
+    temp->prev = new_box;
+
+
 }
 
 

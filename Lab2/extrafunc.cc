@@ -22,3 +22,29 @@ List::Element::~Element()
         }
     }
 }
+
+/*
+    while(temp != last || temp->prev == first)
+    {
+        if(N <= temp->value || temp == last)
+        {
+            new_box->next = temp;
+            new_box->prev = temp->prev;
+            temp->prev->next = new_box;
+            temp->prev = new_box;
+
+            temp = last;
+        }
+        else
+        {
+            temp = temp->next;
+            if(temp == last)
+            {
+                new_box->next = temp;
+                new_box->prev = temp->prev;
+                temp->prev->next = new_box;
+                temp->prev = new_box;
+            }
+        }
+    }
+*/

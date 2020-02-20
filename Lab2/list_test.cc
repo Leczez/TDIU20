@@ -59,6 +59,38 @@ TEST_CASE("Remove function")
     ss << list;
     CHECK(ss.str() == "10 12 13");
 
+    SECTION("EDGE CASES")
+    {
+        stringstream ss{};
+
+        List list{};
+        list.insert(10);
+        list.insert(11);
+        list.insert(12);
+        list.insert(13);
+
+        list.remove(0);
+        ss << list;
+        CHECK(ss.str() == "11 12 13");
+
+        ss.str("");
+        ss.clear();
+        list.remove(2);
+        ss << list;
+        CHECK(ss.str() == "11 12");
+
+        ss.str("");
+        ss.clear();
+        list.remove(1);
+        ss << list;
+        CHECK(ss.str() == "11");
+
+        ss.str("");
+        ss.clear();
+        list.remove(0);
+        ss << list;
+        CHECK(ss.str() == "");
+    }
 
     SECTION("Exception")
     {
@@ -260,16 +292,10 @@ TEST_CASE("Index operator")
 
 TEST_CASE("List_Iterator")
 {
-    SECTION("Empty Constructor")
-    {
-        List::List_iterator{};
-    }
-
     SECTION("Operator =")
     {
         List list{1,2,3,4,5};
-        List::List_iterator it{};
-        it = list.begin();
+        List::List_iterator it = list.begin();
     }
 
     SECTION("Operator ==")
@@ -277,14 +303,11 @@ TEST_CASE("List_Iterator")
         List list{1,2,3,4,5};
         List list2{4,5,6,7,8};
 
-        List::List_iterator itA{};
-        List::List_iterator itB{};
-        itA = list.begin();
-        itB = list.begin();
+        List::List_iterator itA = list.begin();
+        List::List_iterator itB = list.begin();
         CHECK( itA == itB );
 
-        List::List_iterator itC{};
-        itC = list2.begin();
+        List::List_iterator itC = list2.begin();
         CHECK_FALSE( itA == itC );
     }
 
@@ -293,14 +316,12 @@ TEST_CASE("List_Iterator")
         List list{1,2,3,4,5};
         List list2{4,5,6,7,8};
 
-        List::List_iterator itA{};
-        List::List_iterator itB{};
-        itA = list.begin();
-        itB = list.begin();
+        List::List_iterator itA = list.begin();
+        List::List_iterator itB = list.begin();
+
         CHECK_FALSE( itA != itB );
 
-        List::List_iterator itC{};
-        itC = list2.begin();
+        List::List_iterator itC = list2.begin();
         CHECK( itA != itC );
     }
 
@@ -334,11 +355,6 @@ TEST_CASE("List_Iterator")
         List::List_iterator itB = list.end(); //SAME AS THE ABOVE TEST
         CHECK_THROWS(++itB);
 
-        SECTION("UNINITIATED LIST")
-        {
-            List::List_iterator itA{};
-            CHECK_THROWS(*itA);
-        }
     }
 
     SECTION("FOR-LOOP")

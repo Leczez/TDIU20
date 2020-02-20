@@ -45,7 +45,6 @@ public:
     {
     public:
         friend class List;
-        List_iterator() = default;
         List_iterator& operator=(List_iterator const &) = default;
 
         List_iterator& operator++();
@@ -54,6 +53,7 @@ public:
         int  operator*() const;
 
     private:
+        List_iterator() = default;
         Element* pos{};
     };
 
