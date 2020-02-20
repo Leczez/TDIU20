@@ -17,10 +17,42 @@ protected:
     Connection& B{};
 
 private:
+};
+
+class Resistor : public Component
+{
+public:
+    double get_voltage() const;
+    double get_current() const;
+    void tick();
+protected:
+
+private:
+
+};
+
+class Capacitor : public Component
+{
+public:
+    double get_voltage() const;
+    double get_current() const;
+    void tick();
+protected:
+
+private:
+
+};
 
 
+class Battery : public Component
+{
+public:
+    double get_voltage() const;
+    double get_current() const;
+    void tick();
+protected:
 
-
+private:
 
 };
 

@@ -5,6 +5,7 @@
 class Connection
 {
 public:
+    Connection() = default;
     void set_voltage(double const& input);
     double get_voltage();
 
