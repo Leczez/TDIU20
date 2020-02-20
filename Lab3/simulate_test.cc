@@ -3,7 +3,7 @@
 #include <sstream>
 #include <utility>
 #include "catch.hpp"
-#include "Component.h"
+#include "Circuit.h"
 
 #if 0
 

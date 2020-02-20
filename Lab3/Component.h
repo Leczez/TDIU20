@@ -8,7 +8,7 @@ class Component
 {
 public:
     Component(std::string n, double data, Connection& first, Connection& last);
-    virtual double get_voltage() = 0;
+    virtual double get_voltage() const;
     virtual double get_current() = 0;
     virtual void tick(double const& time_period) = 0;
 
@@ -25,46 +25,36 @@ private:
 class Resistor : public Component
 {
 public:
-    //Resistor(std::string n, double ohm, Connection& first, Connection& last);
-    using Component::Component;
-    double get_voltage() const;
     double get_current() const;
     void tick(double const& time_period);
 protected:
 
 private:
-    //double resistance{};
+
 };
 
 class Capacitor : public Component
 {
 public:
-    double get_voltage() const;
     double get_current() const;
     void tick(double const& time_period);
 protected:
 
 private:
-    double capacitance{};
+    double charge{};
 };
 
 
 class Battery : public Component
 {
 public:
-    double get_voltage() const;
+    double get_voltage() const override;
     double get_current() const;
     void tick(double const& time_period);
 protected:
 
 private:
-    double voltage{};
 };
-
-
-
-
-
 
 
 
