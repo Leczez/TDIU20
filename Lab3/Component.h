@@ -13,10 +13,11 @@ public:
 
 protected:
     std::string name{};
-    Connection& A{};
-    Connection& B{};
+    //Connection& A{};
+    //Connection& B{};
 
 private:
+
 };
 
 class Resistor : public Component
@@ -28,7 +29,7 @@ public:
 protected:
 
 private:
-
+    double resistance{};
 };
 
 class Capacitor : public Component
@@ -40,7 +41,7 @@ public:
 protected:
 
 private:
-
+    double capacitance{}
 };
 
 
@@ -53,7 +54,7 @@ public:
 protected:
 
 private:
-
+    double voltage{};
 };
 
 

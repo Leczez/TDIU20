@@ -2,8 +2,9 @@
 #include "Circuit.h"
 
 
-
-void insert(Component* input)
+/*
+void Circuit::insert(Component* input)
 {
     net.pushback(input);
 }
+*/

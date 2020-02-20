@@ -8,8 +8,8 @@ class Circuit
 {
 public:
     void simulate();
-    void insert(Component* input); // ska insert:a komponenter.
-    vector<Component*> net{}; // ska bli private
+    //void insert(Component* input); // ska insert:a komponenter.
+    std::vector<Component*> net{}; // ska bli private
 private:
 
 };
