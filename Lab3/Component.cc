@@ -1,5 +1,8 @@
 #include "Component.h"
 
+//Component
+Component::Component(std::string n, double data, Connection& first, Connection& last):
+name{n}, value{data}, A{first}, B{last}{}
 
 //Resistor
 double Resistor::get_voltage() const
@@ -12,7 +15,7 @@ double Resistor::get_current() const
 
 }
 
-void Resistor::tick()
+void Resistor::tick(double const& time_period)
 {
 
 }
@@ -29,7 +32,7 @@ double Capacitor::get_current() const
 
 }
 
-void Capacitor::tick()
+void Capacitor::tick(double const& time_period)
 {
 
 }
@@ -38,7 +41,7 @@ void Capacitor::tick()
 //Battery
 double Battery::get_voltage() const
 {
-
+    return voltage;
 }
 
 double Battery::get_current() const
@@ -46,7 +49,7 @@ double Battery::get_current() const
 
 }
 
-void Battery::tick()
+void Battery::tick(double const& time_period)
 {
 
 }
