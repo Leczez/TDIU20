@@ -1,6 +1,6 @@
 #include "List.h"
 #include <stdexcept>
-#include <vector>
+#include <utility>
 
 using namespace std;
 
@@ -25,11 +25,13 @@ List::~List()
         }
         delete first;
         delete last;
+        first = nullptr;
+        last  = nullptr;
     }
 }
 
 
-//TODO: Ni kan läsa datat direkt från initializer_list med en for range loop.
+//TODO: Ni kan läsa datat direkt från initializer_list med en for range loop. - OK
 List::List(initializer_list<int> const &data)
 {
     last = new Element{};
@@ -37,16 +39,14 @@ List::List(initializer_list<int> const &data)
     last->prev = first;
     first->next = last;
 
-    vector<int> vector_data{data};
-    for(unsigned int i{};i < vector_data.size();i++)
+    for(int i : data)
     {
-        insert(vector_data[i]);
+        insert(i);
     }
 }
-
 //TODO: Om ni ska använda er av insert i kopieringen så
 //Ska ni gå baklänges genom listan.
-//Då sätts värdet alltid in i början.
+//Då sätts värdet alltid in i början. - OK
 List::List(List const &l)
 {
     last = new Element{};
@@ -54,11 +54,11 @@ List::List(List const &l)
     last->prev = first;
     first->next = last;
 
-    Element* temp{l.first};
-    while(temp->next != l.last)
+    Element* temp{l.last};
+    while(temp->prev != l.first)
     {
-        insert(temp->next->value);
-        temp = temp->next;
+        insert(temp->prev->value);
+        temp = temp->prev;
     }
 }
 
@@ -70,25 +70,37 @@ List::List(List &&l)
 
 //TODO: Den här kopieringen lägger till data i this.
 //Det nuvarande datat ska skrivas över.
-//Tex: l1 = {1,2}; l2 =  {3,4}; l2 = l1; => l2 = {1,2,3,4}
+//Tex: l1 = {1,2}; l2 =  {3,4}; l2 = l1; => l2 = {1,2,3,4} - OK
 List& List::operator=(List const &l)
 {
-    Element* temp{l.first};
-    while(temp->next != l.last)
+    if(this != &l)
     {
-        insert(temp->next->value);
-        temp = temp->next;
+        (*this).~List();
+        last = new Element{};
+        first = new Element{};
+        last->prev = first;
+        first->next = last;
+
+        Element* temp{l.first};
+        while(temp->next != l.last)
+        {
+            insert(temp->next->value);
+            temp = temp->next;
+        }
     }
     return *this;
 }
 
-//Kommentar: Ni hade kunnat använda swap istället.
+//Kommentar: Ni hade kunnat använda swap istället. -OK
 List& List::operator=(List &&l)
 {
-    last  = std::exchange(l.last, last);
-    first = std::exchange(l.first, first);
+    if(this != &l)
+    {
+        last  = std::exchange(l.last, last);
+        first = std::exchange(l.first, first);
+        l.~List();
+    }
     return *this;
-
 }
 
 
@@ -133,8 +145,6 @@ void List::insert(int const N) const
     new_box->prev = temp->prev;
     temp->prev->next = new_box;
     temp->prev = new_box;
-
-
 }
 
 
@@ -157,17 +167,20 @@ void List::remove(int const N) const
 
 ostream& operator<<(ostream& os, List const& l)
 {
-    List::Element* temp{l.first};
-    while(temp->next != l.last)
+    if(l.first != nullptr && l.last != nullptr)
     {
-        os << temp->next->value;
-        temp = temp->next;
-        if(temp->next != l.last) // stops it from writing a space in the last output
+        List::Element* temp{l.first};
+        while(temp->next != l.last)
         {
-            os << " ";
+            os << temp->next->value;
+            temp = temp->next;
+            if(temp->next != l.last) // stops it from writing a space in the last output
+            {
+                os << " ";
+            }
         }
     }
-    return os;
+        return os;
 }
 
 

@@ -15,10 +15,13 @@ using namespace std;
 //  4. Testa alla testfall
 //  5. Refaktorera (skriv om) så att allt ser bra ut
 
-//TODO: Ingen check i det här testet.
+//TODO: Ingen check i det här testet. - OKEJ
 TEST_CASE ("Default constructor")
 {
-    List l{};
+    List list{};
+    stringstream ss{};    //TILLAGD
+    ss << list;           //TILLAGD
+    CHECK(ss.str() == "");//TILLAGD
 }
 
 TEST_CASE("Single Insert")
@@ -170,8 +173,8 @@ TEST_CASE("Copy constructor")
 }
 
 //TODO: Testa att kopiera till en lista med data.
-//Se kommentaren till copy operator i .cc filen.
-TEST_CASE("Copy operator")
+//Se kommentaren till copy operator i .cc filen. - OK
+TEST_CASE("Assignment operator")
 {
     stringstream ss{};
 
@@ -180,7 +183,7 @@ TEST_CASE("Copy operator")
     ss << list2;
     CHECK(ss.str() == "4 5 10");
 
-    SECTION("Empty copy")
+    SECTION("Empty assignment")
     {
         stringstream ss{};
         List list{};
@@ -189,7 +192,7 @@ TEST_CASE("Copy operator")
         CHECK(ss.str() == "");
     }
 
-    SECTION("Changes only the copy")
+    SECTION("Changes only the assigned object")
     {
         stringstream ss{};
         stringstream ss2{};
@@ -202,6 +205,36 @@ TEST_CASE("Copy operator")
         ss2 << list2;
         CHECK(ss.str() == "3 5");
         CHECK(ss2.str() == "3 5 10");
+    }
+    SECTION("Assign List with Data already in it")//TILLAGD
+    {
+        stringstream ss{};
+        stringstream ss2{};
+        List list{1,2,3};
+        List list2{10,11,12};
+
+        list = list2;
+        ss << list;
+        CHECK(ss.str() == "10 11 12");
+
+        ss2 << list2;
+        CHECK(ss2.str() == "10 11 12");
+    }
+    SECTION("Self assign")//TILLAGD
+    {
+        stringstream ss{};
+        List list{1,2,3};
+        list = list;
+        ss << list;
+        CHECK(ss.str() == "1 2 3");
+    }
+    SECTION("Empty Self assign")//TILLAGD
+    {
+        stringstream ss{};
+        List list{};
+        list = list;
+        ss << list;
+        CHECK(ss.str() == "");
     }
 }
 
@@ -225,17 +258,31 @@ TEST_CASE("Move constructor")
     }
 
 
-    SECTION("Extra Tests")
+    SECTION("Extra Tests") //TILLAGD
     {
         stringstream ss{};
+        stringstream ss2{};
         List list{1,3,5};
         List list2{std::move(list)};
+
+        ss << list;
+        CHECK(ss.str() == "");
+        ss.str("");
+
+        ss2 << list2;
+        CHECK(ss2.str() == "1 3 5");
+        ss2.str("");
+
         list2.insert(10);
+        list2.insert(2);
         list2.remove(0);
-        ss << list2;
-        CHECK(ss.str() == "3 5 10");
+        ss2 << list2;
+        CHECK(ss2.str() == "2 3 5 10");
+        ss << list;
+        CHECK(ss.str() == "");
 
     }
+
 }
 
 //TODO: Testa self assignment och att orginalet inte ändras.
@@ -249,7 +296,7 @@ TEST_CASE("Move operator")
     ss << list2;
     CHECK(ss.str() == "4 5 10");
 
-    SECTION("Empty copy")
+    SECTION("Empty move")
     {
         stringstream ss{};
         List list{};
@@ -259,19 +306,72 @@ TEST_CASE("Move operator")
         CHECK(ss.str() == "");
     }
 
-    SECTION("Extra Tests")
+    SECTION("Extra Tests") //TILLAGD
     {
         stringstream ss{};
+        stringstream ss2{};
         List list{1,3,5};
-        List list2;
-        list2 = std::move(list);
-        list2.insert(10);
-        list2.remove(0);
-        ss << list2;
-        CHECK(ss.str() == "3 5 10");
+        List list2 = std::move(list);
 
+        ss << list;
+        CHECK(ss.str() == "");
+        ss.str("");
+
+        ss2 << list2;
+        CHECK(ss2.str() == "1 3 5");
+        ss2.str("");
+
+        list2.insert(10);
+        list2.insert(2);
+        list2.remove(0);
+        ss2 << list2;
+        CHECK(ss2.str() == "2 3 5 10");
+        ss << list;
+        CHECK(ss.str() == "");
     }
 
+    SECTION("Extra Tests with Data already in both") //TILLAGD
+    {
+        stringstream ss{};
+        stringstream ss2{};
+        List list{1,3,5};
+        List list2{10,15};
+        list2 = std::move(list);
+
+        ss << list;
+        CHECK(ss.str() == "");
+        ss.str("");
+
+        ss2 << list2;
+        CHECK(ss2.str() == "1 3 5");
+        ss2.str("");
+
+        list2.insert(10);
+        list2.insert(2);
+        list2.remove(0);
+        ss2 << list2;
+        CHECK(ss2.str() == "2 3 5 10");
+        ss << list;
+        CHECK(ss.str() == "");
+    }
+
+    SECTION("Self assign with")//TILLAGD
+    {
+        stringstream ss{};
+        List list{1,2,3};
+        list = std::move(list);
+        ss << list;
+        CHECK(ss.str() == "1 2 3");
+    }
+
+    SECTION("Empty Self assign")//TILLAGD
+    {
+        stringstream ss{};
+        List list{};
+        list = std::move(list);
+        ss << list;
+        CHECK(ss.str() == "");
+    }
 }
 
 TEST_CASE("Index operator")
@@ -385,6 +485,6 @@ TEST_CASE("List_Iterator")
     }
 }
 
-#if 0
 
+#if 0
 #endif
