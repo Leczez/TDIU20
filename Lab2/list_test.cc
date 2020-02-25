@@ -15,6 +15,7 @@ using namespace std;
 //  4. Testa alla testfall
 //  5. Refaktorera (skriv om) så att allt ser bra ut
 
+//TODO: Ingen check i det här testet.
 TEST_CASE ("Default constructor")
 {
     List l{};
@@ -168,6 +169,8 @@ TEST_CASE("Copy constructor")
     }
 }
 
+//TODO: Testa att kopiera till en lista med data.
+//Se kommentaren till copy operator i .cc filen.
 TEST_CASE("Copy operator")
 {
     stringstream ss{};
@@ -202,6 +205,7 @@ TEST_CASE("Copy operator")
     }
 }
 
+//TODO: Testa så att datat i orginalet (list) inte ändras vid list2.insert tex.
 TEST_CASE("Move constructor")
 {
     stringstream ss{};
@@ -234,6 +238,7 @@ TEST_CASE("Move constructor")
     }
 }
 
+//TODO: Testa self assignment och att orginalet inte ändras.
 TEST_CASE("Move operator")
 {
     stringstream ss{};

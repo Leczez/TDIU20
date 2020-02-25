@@ -3,6 +3,12 @@
 #include <iostream>
 #include <initializer_list>
 
+//TODO: 5-4 - Läs rättningsprotokollet.
+//TODO: Era remove och insert funktioner ska inte vara const.
+//Det kompilerar om man sätter const efter som ingen medlem
+//direkt modifieras, men insert och remove modifierar listan
+//så därför ska de inte vara const.
+
 class List
 {
 private:
@@ -12,6 +18,7 @@ private:
         Element() = default;
         Element(int N);
         ~Element() = default;
+
         Element(Element const &) = delete;
         Element(Element &&) = delete;
         Element& operator=(Element const &) = delete;
@@ -36,6 +43,7 @@ public:
     List& operator=(List &&l);
 
     int operator[](int const index) const;
+    
     void insert(int const N) const;
     void remove(int const N) const;
     int size() const;

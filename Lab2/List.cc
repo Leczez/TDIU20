@@ -29,6 +29,7 @@ List::~List()
 }
 
 
+//TODO: Ni kan läsa datat direkt från initializer_list med en for range loop.
 List::List(initializer_list<int> const &data)
 {
     last = new Element{};
@@ -43,7 +44,9 @@ List::List(initializer_list<int> const &data)
     }
 }
 
-
+//TODO: Om ni ska använda er av insert i kopieringen så
+//Ska ni gå baklänges genom listan.
+//Då sätts värdet alltid in i början.
 List::List(List const &l)
 {
     last = new Element{};
@@ -59,14 +62,15 @@ List::List(List const &l)
     }
 }
 
-
 List::List(List &&l)
 {
     last  = std::exchange(l.last, nullptr);
     first = std::exchange(l.first, nullptr);
 }
 
-
+//TODO: Den här kopieringen lägger till data i this.
+//Det nuvarande datat ska skrivas över.
+//Tex: l1 = {1,2}; l2 =  {3,4}; l2 = l1; => l2 = {1,2,3,4}
 List& List::operator=(List const &l)
 {
     Element* temp{l.first};
@@ -78,7 +82,7 @@ List& List::operator=(List const &l)
     return *this;
 }
 
-
+//Kommentar: Ni hade kunnat använda swap istället.
 List& List::operator=(List &&l)
 {
     last  = std::exchange(l.last, last);
@@ -169,7 +173,6 @@ ostream& operator<<(ostream& os, List const& l)
 
 List::Element::Element(int N): value{N}
 {}
-
 
 List::List_iterator List::begin() const
 {
