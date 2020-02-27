@@ -5,13 +5,12 @@ using namespace std;
 
 
 
-void Connection::set_voltage(double const& input)
+void Connection::set_potential(double const& input)
 {
-    voltage = input;
-    //cout << "voltage " << voltage << endl;
+    potential = input;
 }
 
-double Connection::get_voltage() const
+double Connection::get_potential() const
 {
-    return voltage;
+    return potential;
 }

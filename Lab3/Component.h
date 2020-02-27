@@ -7,16 +7,16 @@
 class Component
 {
 public:
-    Component(std::string n, double data, Connection first, Connection last);
+    Component(std::string n, double data, Connection &first, Connection &last);
     virtual double get_voltage() const;
     virtual double get_current() const = 0;
     virtual void tick(double const& time_period) = 0;
     std::string get_name() const;
-    
+
 protected:
     std::string name{};
-    Connection& A;
-    Connection& B;
+    Connection &A;
+    Connection &B;
     double value{};
 
 private:

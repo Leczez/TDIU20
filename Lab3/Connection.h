@@ -6,14 +6,14 @@ class Connection
 {
 public:
     Connection() = default;
-    void set_voltage(double const& input);
-    double get_voltage() const;
+    void set_potential(double const& input);
+    double get_potential() const;
 
 protected:
 
 
 private:
-    double voltage{};
+    double potential{};
 
 };
 

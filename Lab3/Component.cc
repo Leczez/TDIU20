@@ -4,12 +4,21 @@
 using namespace std;
 
 //Component
-Component::Component(std::string n, double data, Connection first, Connection last):
+Component::Component(std::string n, double data, Connection &first, Connection &last):
 name{n}, value{data}, A{first}, B{last}{}
 
 double Component::get_voltage() const
 {
-    return (A.get_voltage() - B.get_voltage());    
+    double voltage{};
+    if(A.get_potential() >= B.get_potential())
+    {
+        voltage = A.get_potential() - B.get_potential();
+    }
+    else
+    {
+        voltage = B.get_potential() - A.get_potential();
+    }
+    return voltage;
 }
 
 std::string Component::get_name() const
@@ -18,13 +27,6 @@ std::string Component::get_name() const
 }
 
 //Resistor
-/*
-double Resistor::get_voltage() const
-{
-    return A.get_voltage() - B.get_voltage();    
-}
-*/
-
 double Resistor::get_current() const
 {
     return get_voltage()/value;
@@ -32,9 +34,9 @@ double Resistor::get_current() const
 
 void Resistor::tick(double const& time_period)
 {
-    double change_in_potential = ((A.get_voltage() - B.get_voltage())/value) * time_period;
-    A.set_voltage( A.get_voltage()-change_in_potential);
-    B.set_voltage( B.get_voltage()+change_in_potential);
+    double change_in_potential = ((A.get_potential() - B.get_potential())/value) * time_period;
+    A.set_potential( A.get_potential() - change_in_potential);
+    B.set_potential( B.get_potential() + change_in_potential);
 }
 
 
@@ -47,7 +49,21 @@ double Capacitor::get_current() const
 
 void Capacitor::tick(double const& time_period)
 {
-
+    double difference{};
+    if(A.get_potential() >= B.get_potential())
+    {
+        difference = A.get_potential() - B.get_potential();
+        charge += (difference-charge) * value * time_period;
+        A.set_potential( A.get_potential() - charge);
+        B.set_potential( B.get_potential() + charge);
+    }
+    else
+    {
+        difference = B.get_potential() - A.get_potential();
+        charge += (difference-charge) * value * time_period;
+        A.set_potential( A.get_potential() + charge);
+        B.set_potential( B.get_potential() - charge);
+    }
 }
 
 
@@ -60,11 +76,11 @@ double Battery::get_voltage() const
 
 double Battery::get_current() const
 {
-    return value - value;
+    return 0;
 }
 
 void Battery::tick(double const& time_period)
 {
-    A.set_voltage(value);
-    B.set_voltage(0);
+    A.set_potential(value);
+    B.set_potential(0);
 }
