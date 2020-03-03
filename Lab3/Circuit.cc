@@ -15,7 +15,7 @@ Circuit::~Circuit()
     {
         delete i;
     }
-    
+
 }
 
 
@@ -71,22 +71,22 @@ void Circuit::insert_battery(std::string name, double value, std::string node1, 
 
 
 
-ostream& Circuit::simulate(int const& iterations, int const& rows, double const& time_step, ostream& os)
+void Circuit::simulate(int const& iterations, int const& rows, double const& time_step)
 {
     int width{14};
     int precision{2};
 
     for(Component* const e : net)
     {
-        os <<  setw(width) << e->get_name();
+        cout <<  setw(width) << e->get_name();
     }
-    os << endl;
+    cout << endl;
 
      for(Component* const e : net)
     {
-        os <<  setw(width/2) << "Volt" << setw(width/2) << "Curr";
+        cout <<  setw(width/2) << "Volt" << setw(width/2) << "Curr";
     }
-    os << endl;
+    cout << endl;
 
     for(int i{}; i < rows; i++)
     {
@@ -100,10 +100,9 @@ ostream& Circuit::simulate(int const& iterations, int const& rows, double const&
 
         for(Component* const e : net)
         {
-            os << setw(width/2) << setprecision(precision) << fixed << e->get_voltage() << setw(width/2) << setprecision(precision)<< e->get_current();
-
+            cout << setw(width/2) << setprecision(precision) << fixed << e->get_voltage() << setw(width/2) << setprecision(precision)<< e->get_current();
         }
-        os << endl;
+        cout << endl;
     }
-    return os;
+
 }

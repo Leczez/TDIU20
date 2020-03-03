@@ -12,7 +12,7 @@ class Circuit
 public:
     ~Circuit();
 
-    std::ostream& simulate(int const& iterations, int const& rows, double const& time_step, std::ostream& os);
+    void simulate(int const& iterations, int const& rows, double const& time_step);
     
     void create_node(std::string const& name);
     void insert_resistor(std::string name, double value, std::string node1, std::string node2);
