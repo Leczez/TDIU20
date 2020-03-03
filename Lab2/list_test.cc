@@ -238,7 +238,7 @@ TEST_CASE("Assignment operator")
     }
 }
 
-//TODO: Testa så att datat i orginalet (list) inte ändras vid list2.insert tex.
+//TODO: Testa så att datat i orginalet (list) inte ändras vid list2.insert tex. -OK
 TEST_CASE("Move constructor")
 {
     stringstream ss{};
@@ -258,7 +258,7 @@ TEST_CASE("Move constructor")
     }
 
 
-    SECTION("Extra Tests") //TILLAGD
+    SECTION("Changes only the specified object") //TILLAGD
     {
         stringstream ss{};
         stringstream ss2{};
@@ -267,11 +267,11 @@ TEST_CASE("Move constructor")
 
         ss << list;
         CHECK(ss.str() == "");
-        ss.str("");
+        ss.str(""); //Clears stream
 
         ss2 << list2;
         CHECK(ss2.str() == "1 3 5");
-        ss2.str("");
+        ss2.str(""); //Clears stream
 
         list2.insert(10);
         list2.insert(2);
@@ -306,7 +306,7 @@ TEST_CASE("Move operator")
         CHECK(ss.str() == "");
     }
 
-    SECTION("Extra Tests") //TILLAGD
+    SECTION("Changes only the specified object") //TILLAGD
     {
         stringstream ss{};
         stringstream ss2{};
@@ -315,11 +315,11 @@ TEST_CASE("Move operator")
 
         ss << list;
         CHECK(ss.str() == "");
-        ss.str("");
+        ss.str(""); //Clears stream
 
         ss2 << list2;
         CHECK(ss2.str() == "1 3 5");
-        ss2.str("");
+        ss2.str(""); //Clears stream
 
         list2.insert(10);
         list2.insert(2);
@@ -330,7 +330,7 @@ TEST_CASE("Move operator")
         CHECK(ss.str() == "");
     }
 
-    SECTION("Extra Tests with Data already in both") //TILLAGD
+    SECTION("Data already in both objects") //TILLAGD
     {
         stringstream ss{};
         stringstream ss2{};
@@ -340,11 +340,11 @@ TEST_CASE("Move operator")
 
         ss << list;
         CHECK(ss.str() == "");
-        ss.str("");
+        ss.str(""); //CLEARS STREAM
 
         ss2 << list2;
         CHECK(ss2.str() == "1 3 5");
-        ss2.str("");
+        ss2.str(""); //CLEARS STREAM
 
         list2.insert(10);
         list2.insert(2);
@@ -355,7 +355,7 @@ TEST_CASE("Move operator")
         CHECK(ss.str() == "");
     }
 
-    SECTION("Self assign with")//TILLAGD
+    SECTION("Self Move")//TILLAGD
     {
         stringstream ss{};
         List list{1,2,3};
@@ -364,7 +364,7 @@ TEST_CASE("Move operator")
         CHECK(ss.str() == "1 2 3");
     }
 
-    SECTION("Empty Self assign")//TILLAGD
+    SECTION("Empty Self Move")//TILLAGD
     {
         stringstream ss{};
         List list{};

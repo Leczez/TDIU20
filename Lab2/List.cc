@@ -3,7 +3,7 @@
 #include <utility>
 
 using namespace std;
-
+////////// LIST //////////////
 List::List()
 {
     last = new Element{};
@@ -81,11 +81,11 @@ List& List::operator=(List const &l)
         last->prev = first;
         first->next = last;
 
-        Element* temp{l.first};
-        while(temp->next != l.last)
+        Element* temp{l.last};
+        while(temp->prev != l.first)
         {
-            insert(temp->next->value);
-            temp = temp->next;
+            insert(temp->prev->value);
+            temp = temp->prev;
         }
     }
     return *this;
@@ -98,7 +98,7 @@ List& List::operator=(List &&l)
     {
         last  = std::exchange(l.last, last);
         first = std::exchange(l.first, first);
-        l.~List();
+        l.~List(); //Destructs data which is swapped into the right hand side.
     }
     return *this;
 }
@@ -132,7 +132,7 @@ int List::operator[](int const index) const
 }
 
 
-void List::insert(int const N) const
+void List::insert(int const N)
 {
     Element* temp{first->next};
     Element* new_box = new Element{N};
@@ -148,7 +148,7 @@ void List::insert(int const N) const
 }
 
 
-void List::remove(int const N) const
+void List::remove(int const N)
 {
     Element* temp{first};
     for(int i{}; i < N+1;i++)
@@ -183,10 +183,10 @@ ostream& operator<<(ostream& os, List const& l)
         return os;
 }
 
-
+////////// ELEMENT ////////////////
 List::Element::Element(int N): value{N}
 {}
-
+////////// LIST ITERATOR //////////
 List::List_iterator List::begin() const
 {
     List_iterator temp{};

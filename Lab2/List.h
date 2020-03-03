@@ -7,7 +7,7 @@
 //TODO: Era remove och insert funktioner ska inte vara const.
 //Det kompilerar om man sätter const efter som ingen medlem
 //direkt modifieras, men insert och remove modifierar listan
-//så därför ska de inte vara const.
+//så därför ska de inte vara const. -OK
 
 class List
 {
@@ -43,9 +43,9 @@ public:
     List& operator=(List &&l);
 
     int operator[](int const index) const;
-    
-    void insert(int const N) const;
-    void remove(int const N) const;
+
+    void insert(int const N);
+    void remove(int const N);
     int size() const;
     friend std::ostream& operator<<(std::ostream& os, List const& l);
 
