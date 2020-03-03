@@ -16,8 +16,6 @@ double Connection::get_potential() const
     return potential;
 }
 
-
-
 std::string Connection::get_name() const
 {
     return name;

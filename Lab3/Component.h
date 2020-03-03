@@ -8,13 +8,15 @@ class Component
 {
 public:
     Component(std::string n, double data, Connection &first, Connection &last);
+    //Component(std::string n, double data);
     virtual double get_voltage() const;
     virtual double get_current() const = 0;
     virtual void tick(double const& time_period) = 0;
     std::string get_name() const;
-
+    virtual void set_nodes(Connection& node1, Connection& node2);
 protected:
     std::string name{};
+    //Connection dummynode{};
     Connection &A;
     Connection &B;
     double value{};
