@@ -4,10 +4,46 @@
 
 using namespace std;
 
-void Circuit::insert(Component* input)
+void Circuit::insert(Component* input, std::string node1, std::string node2)
 {
+    Connection* node_1;
+    Connection* node_2;
+    int counter{};
+    while(counter < nodes.size())
+    {
+        if(*(nodes[counter]).get_name() == node1)
+        {
+            node_1 = net[counter];
+        }
+        if(*(nodes[counter]).get_name() == node2)
+        {
+            node_2 = net[counter];
+        }
+    }
     net.push_back(input);
 }
+
+void Circuit::create_node(std::string const& name)
+{
+    nodes.push_back(new Connection{name});
+}
+
+void Circuit::insert_resistor(std::string name, double value, std::string node1, std::string node2)
+{
+    
+    //insert(new Resistor{name,value,})
+}
+
+void Circuit::insert_capacitor(std::string name, double value, std::string node1, std::string node2)
+{
+
+}
+
+void Circuit::insert_battery(std::string name, double value, std::string node1, std::string node2)
+{
+
+}
+
 
 
 void Circuit::simulate(int const& iterations, int const& rows, double const& time_step)

@@ -10,6 +10,7 @@ name{n}, value{data}, A{first}, B{last}{}
 double Component::get_voltage() const
 {
     double voltage{};
+    
     if(A.get_potential() >= B.get_potential())
     {
         voltage = A.get_potential() - B.get_potential();
@@ -18,6 +19,9 @@ double Component::get_voltage() const
     {
         voltage = B.get_potential() - A.get_potential();
     }
+    
+    //voltage = A.get_potential() - B.get_potential();
+
     return voltage;
 }
 
@@ -49,20 +53,21 @@ double Capacitor::get_current() const
 
 void Capacitor::tick(double const& time_period)
 {
-    double difference{};
     if(A.get_potential() >= B.get_potential())
     {
-        difference = A.get_potential() - B.get_potential();
-        charge += (difference-charge) * value * time_period;
-        A.set_potential( A.get_potential() - charge);
-        B.set_potential( B.get_potential() + charge);
+        double difference = A.get_potential() - B.get_potential();
+        difference = (difference-charge) * value * time_period;
+        A.set_potential(A.get_potential() - difference);
+        B.set_potential(B.get_potential() + difference);
+        charge += difference;
     }
     else
     {
-        difference = B.get_potential() - A.get_potential();
-        charge += (difference-charge) * value * time_period;
-        A.set_potential( A.get_potential() + charge);
-        B.set_potential( B.get_potential() - charge);
+        double difference = B.get_potential() - A.get_potential();
+        difference = (difference-charge) * value * time_period;
+        A.set_potential(A.get_potential() + difference);
+        B.set_potential(B.get_potential() - difference);
+        charge += difference;
     }
 }
 
