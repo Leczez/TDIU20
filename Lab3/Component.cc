@@ -4,8 +4,19 @@
 using namespace std;
 
 //Component
+
 Component::Component(std::string n, double data, Connection &first, Connection &last):
 name{n}, value{data}, A{first}, B{last}{}
+
+/*
+Component::Component(std::string n, double data):name{n}, value {data}, A{dummynode}, B{dummynode}
+{}
+*/
+void Component::set_nodes(Connection&  node1, Connection& node2)
+{
+    A = node1;
+    B = node2;
+}
 
 double Component::get_voltage() const
 {

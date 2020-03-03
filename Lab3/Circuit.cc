@@ -2,66 +2,91 @@
 #include <iostream>
 #include <iomanip>
 
+
 using namespace std;
 
-void Circuit::insert(Component* input, std::string node1, std::string node2)
+Circuit::~Circuit()
 {
-    Connection* node_1;
-    Connection* node_2;
-    int counter{};
-    while(counter < nodes.size())
+    for(Connection* i : nodes)
     {
-        if(*(nodes[counter]).get_name() == node1)
+        delete i;
+    }
+    for(Component* i : net)
+    {
+        delete i;
+    }
+    
+}
+
+
+Connection& Circuit::get_node(std::string const& node) const
+{
+    Connection* A{};
+    for(Connection* i : nodes)
+    {
+        if(i->get_name() == node)
         {
-            node_1 = net[counter];
-        }
-        if(*(nodes[counter]).get_name() == node2)
-        {
-            node_2 = net[counter];
+            A = i;
         }
     }
+    if(A == nullptr)
+    {
+        throw Circuit_Error{"Node doesn't exist"};
+    }
+    return *A;
+}
+
+void Circuit::insert(Component* input)
+{
     net.push_back(input);
 }
 
 void Circuit::create_node(std::string const& name)
 {
+    for(Connection* i : nodes) 
+    {
+        if(i->get_name() == name)
+        {
+            throw Circuit_Error{"Node already exists"};
+        }
+
+    }
     nodes.push_back(new Connection{name});
 }
 
 void Circuit::insert_resistor(std::string name, double value, std::string node1, std::string node2)
 {
-    
-    //insert(new Resistor{name,value,})
+    insert(new Resistor{name, value, get_node(node1), get_node(node2)});
 }
 
 void Circuit::insert_capacitor(std::string name, double value, std::string node1, std::string node2)
 {
-
+    insert(new Capacitor{name, value, get_node(node1), get_node(node2)});
 }
 
 void Circuit::insert_battery(std::string name, double value, std::string node1, std::string node2)
 {
-
+    insert(new Battery{name, value, get_node(node1), get_node(node2)});
 }
 
 
 
-void Circuit::simulate(int const& iterations, int const& rows, double const& time_step)
+ostream& Circuit::simulate(int const& iterations, int const& rows, double const& time_step, ostream& os)
 {
     int width{14};
     int precision{2};
 
     for(Component* const e : net)
     {
-        cout <<  setw(width) << e->get_name();
+        os <<  setw(width) << e->get_name();
     }
-    cout << endl;
+    os << endl;
 
      for(Component* const e : net)
     {
-        cout <<  setw(width/2) << "Volt" << setw(width/2) << "Curr";
+        os <<  setw(width/2) << "Volt" << setw(width/2) << "Curr";
     }
-    cout << endl;
+    os << endl;
 
     for(int i{}; i < rows; i++)
     {
@@ -75,10 +100,10 @@ void Circuit::simulate(int const& iterations, int const& rows, double const& tim
 
         for(Component* const e : net)
         {
-            cout << setw(width/2) << setprecision(precision) << fixed << e->get_voltage() << setw(width/2) << setprecision(precision)<< e->get_current();
+            os << setw(width/2) << setprecision(precision) << fixed << e->get_voltage() << setw(width/2) << setprecision(precision)<< e->get_current();
 
         }
-        cout << endl;
+        os << endl;
     }
-
+    return os;
 }

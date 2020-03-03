@@ -1,6 +1,6 @@
 #include "Circuit.h"
-#include <iostream>
-#include <exception>
+#include <sstream>
+
 using namespace std;
 
 
@@ -35,7 +35,20 @@ int main(int argc, char* argv[])
     }
     
 
+    stringstream ss{};
 
+    Circuit c3{};
+    c3.create_node("p");
+    c3.create_node("n");
+    c3.create_node("l");
+    c3.create_node("r");
+    c3.insert_battery("Bat", battery_voltage, "p", "n");
+    c3.insert_resistor("R1", 150, "p", "l");
+    c3.insert_resistor("R2", 50, "p", "r");
+    c3.insert_capacitor("C3", 1, "l", "r");
+    c3.insert_resistor("R4", 300, "l", "n");
+    c3.insert_capacitor("C5", 0.75, "r", "n");
+    c3.simulate(iterations, rows, time_step, ss);
 
     /*Circuit c{};
     Connection p{};
