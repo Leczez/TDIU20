@@ -134,34 +134,40 @@ int List::operator[](int const index) const
 
 void List::insert(int const N)
 {
-    Element* temp{first->next};
-    Element* new_box = new Element{N};
-
-    while(temp != last && temp->value <= N)
+    if(first != nullptr && last != nullptr)
     {
-        temp = temp->next;
+        Element* temp{first->next};
+        Element* new_box = new Element{N};
+
+        while(temp != last && temp->value <= N)
+        {
+            temp = temp->next;
+        }
+        new_box->next = temp;
+        new_box->prev = temp->prev;
+        temp->prev->next = new_box;
+        temp->prev = new_box;
     }
-    new_box->next = temp;
-    new_box->prev = temp->prev;
-    temp->prev->next = new_box;
-    temp->prev = new_box;
 }
 
 
 void List::remove(int const N)
 {
-    Element* temp{first};
-    for(int i{}; i < N+1;i++)
+    if(first != nullptr && last != nullptr)
     {
-        temp = temp->next;
-        if(temp == last)
+        Element* temp{first};
+        for(int i{}; i < N+1;i++)
         {
-            throw out_of_range{"index out of range"};
+            temp = temp->next;
+            if(temp == last)
+            {
+                throw out_of_range{"index out of range"};
+            }
         }
+        temp->next->prev = temp->prev;
+        temp->prev->next = temp->next;
+        delete temp;
     }
-    temp->next->prev = temp->prev;
-    temp->prev->next = temp->next;
-    delete temp;
 }
 
 

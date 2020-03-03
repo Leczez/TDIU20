@@ -219,6 +219,14 @@ TEST_CASE("Assignment operator")
 
         ss2 << list2;
         CHECK(ss2.str() == "10 11 12");
+
+        list.remove(0);
+        ss.str("");
+        ss2.str("");
+        ss << list;
+        ss2 << list2;
+        CHECK(ss.str() == "11 12");
+        CHECK(ss2.str() == "10 11 12");
     }
     SECTION("Self assign")//TILLAGD
     {
@@ -300,32 +308,59 @@ TEST_CASE("Move operator")
     {
         stringstream ss{};
         List list{};
-        List list2;
+        List list2{};
         list2 = std::move(list);
         ss << list2;
         CHECK(ss.str() == "");
     }
 
-    SECTION("Changes only the specified object") //TILLAGD
+    SECTION("Data in right hand side object") //TILLAGD
     {
         stringstream ss{};
         stringstream ss2{};
         List list{1,3,5};
-        List list2 = std::move(list);
+        List list2{};
+        list2 = std::move(list);
 
         ss << list;
         CHECK(ss.str() == "");
-        ss.str(""); //Clears stream
+        ss.str(""); //CLEARS STREAM
 
         ss2 << list2;
         CHECK(ss2.str() == "1 3 5");
-        ss2.str(""); //Clears stream
+        ss2.str(""); //CLEARS STREAM
 
         list2.insert(10);
         list2.insert(2);
         list2.remove(0);
         ss2 << list2;
         CHECK(ss2.str() == "2 3 5 10");
+        ss << list;
+        CHECK(ss.str() == "");
+    }
+
+    SECTION("Data in left hand side object") //TILLAGD
+    {
+        stringstream ss{};
+        stringstream ss2{};
+        List list{};
+        List list2{1,3,5};
+        list2 = std::move(list);
+
+        ss << list;
+        CHECK(ss.str() == "");
+        ss.str(""); //Clears stream
+
+        ss2 << list2;
+        CHECK(ss2.str() == "");
+        ss2.str(""); //Clears stream
+
+        list2.insert(10);
+        list2.insert(2);
+        list2.remove(0);
+
+        ss2 << list2;
+        CHECK(ss2.str() == "10");
         ss << list;
         CHECK(ss.str() == "");
     }
