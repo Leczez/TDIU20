@@ -6,7 +6,8 @@ using namespace std;
 //Component
 
 Component::Component(std::string n, double data, Connection &first, Connection &last):
-name{n}, value{data}, A{first}, B{last}{}
+name{n}, value{data}, A{first}, B{last}
+{}
 
 /*
 Component::Component(std::string n, double data):name{n}, value {data}, A{dummynode}, B{dummynode}
@@ -21,7 +22,7 @@ void Component::set_nodes(Connection&  node1, Connection& node2)
 double Component::get_voltage() const
 {
     double voltage{};
-    
+
     if(A.get_potential() >= B.get_potential())
     {
         voltage = A.get_potential() - B.get_potential();
@@ -30,7 +31,7 @@ double Component::get_voltage() const
     {
         voltage = B.get_potential() - A.get_potential();
     }
-    
+
     //voltage = A.get_potential() - B.get_potential();
 
     return voltage;
@@ -97,6 +98,8 @@ double Battery::get_current() const
 
 void Battery::tick(double const& time_period)
 {
+    double dummy = time_period;
+    dummy = dummy;
     A.set_potential(value);
     B.set_potential(0);
 }

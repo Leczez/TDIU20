@@ -8,6 +8,7 @@ class Component
 {
 public:
     Component(std::string n, double data, Connection &first, Connection &last);
+    virtual ~Component() = default;
     //Component(std::string n, double data);
     virtual double get_voltage() const;
     virtual double get_current() const = 0;
@@ -15,12 +16,11 @@ public:
     std::string get_name() const;
     virtual void set_nodes(Connection& node1, Connection& node2);
 protected:
-    std::string name{};
+    std::string name;
     //Connection dummynode{};
+    double value;
     Connection &A;
     Connection &B;
-    double value{};
-
 private:
 
 };
@@ -57,6 +57,7 @@ public:
     double get_voltage() const override;
     double get_current() const;
     void tick(double const& time_period);
+
 protected:
 
 private:

@@ -43,7 +43,7 @@ void Circuit::insert(Component* input)
 
 void Circuit::create_node(std::string const& name)
 {
-    for(Connection* i : nodes) 
+    for(Connection* i : nodes)
     {
         if(i->get_name() == name)
         {
@@ -82,7 +82,8 @@ void Circuit::simulate(int const& iterations, int const& rows, double const& tim
     }
     cout << endl;
 
-     for(Component* const e : net)
+     //for(Component* const e : net)
+    for(unsigned int i{}; i < net.size();i++)
     {
         cout <<  setw(width/2) << "Volt" << setw(width/2) << "Curr";
     }
