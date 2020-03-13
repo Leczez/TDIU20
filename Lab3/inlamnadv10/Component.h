@@ -4,14 +4,6 @@
 #include "Connection.h"
 #include <string>
 
-//TODO: Att lagra en variabel "value" som inte har ett definierat
-//värde är dålig objektorientering. Skapa istället de variabler där de
-//behövs i subklasserna.
-
-//TODO: Ni ska använda override på överlagrade funktioner.
-
-//TODO: Ni initierar inte charge vid skapad Capacitor.
-
 class Component
 {
 public:

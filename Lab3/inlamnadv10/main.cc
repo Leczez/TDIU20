@@ -2,9 +2,6 @@
 
 using namespace std;
 
-//TODO: Vid felaktig inskrift ska ett instruktivt felmeddelande
-//skrivas ut. Tänk er att en användare som inte har någon koll på hur
-//ert program fungerar ska kunna skriva in rätt argument efter felmeddelandet.
 
 int main(int argc, char* argv[])
 {
