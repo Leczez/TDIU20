@@ -17,7 +17,6 @@ protected:
 private:
     double potential{};
     std::string name{};
-
 };
 
 

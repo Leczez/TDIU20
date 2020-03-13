@@ -71,7 +71,7 @@ void Circuit::insert_battery(std::string name, double value, std::string node1, 
 
 
 
-void Circuit::simulate(int const& iterations, int const& rows, double const& time_step)
+void Circuit::simulate(int const& iterations, int const& rows, double const& time_step) const
 {
     int width{14};
     int precision{2};
@@ -82,7 +82,6 @@ void Circuit::simulate(int const& iterations, int const& rows, double const& tim
     }
     cout << endl;
 
-     //for(Component* const e : net)
     for(unsigned int i{}; i < net.size();i++)
     {
         cout <<  setw(width/2) << "Volt" << setw(width/2) << "Curr";

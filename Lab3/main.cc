@@ -1,18 +1,22 @@
 #include "Circuit.h"
-
+#include <string>
 using namespace std;
 
 //TODO: Vid felaktig inskrift ska ett instruktivt felmeddelande
 //skrivas ut. Tänk er att en användare som inte har någon koll på hur
 //ert program fungerar ska kunna skriva in rätt argument efter felmeddelandet.
+const std::string ERRORMESSAGE = "The arguments expected are:\n"
+"Number of iterations, in positive integers\n"
+"Number of lines to print, in positive integers\n"
+"Time interval each iteration simulates, in positive seconds\n"
+"Battery voltage, in positive volts\n"
+"Example: 200000 10 0.01 24\n";
 
 int main(int argc, char* argv[])
 {
-    //cout << argc << endl;
     if(argc != 5)
     {
-        throw invalid_argument{"Wrong number of arguments"};
-      //  cout << argc << endl;
+        throw invalid_argument{"WRONG NUMBER OF ARGUMENTS!\n" + ERRORMESSAGE};
 
     }
     int iterations{};
@@ -21,10 +25,10 @@ int main(int argc, char* argv[])
     double battery_voltage{};
 
     try
-    {   
+    {
         if(stoi(argv[1]) < 0 || stoi(argv[2]) < 0 || stoi(argv[3]) < 0 || stoi(argv[4]) < 0)
         {
-            throw logic_error{"Negative input is not allowed"};
+            throw logic_error{"NEGATIVE NUMBERS ARE NOT ALLOWED!\n" + ERRORMESSAGE};
         }
         iterations = std::stoi(argv[1]);
         rows = std::stoi(argv[2]);
@@ -33,9 +37,9 @@ int main(int argc, char* argv[])
     }
     catch(invalid_argument e)
     {
-        throw invalid_argument{"Invalid input!"};
+        throw invalid_argument{"INVALID INPUT!\n" + ERRORMESSAGE};
     }
-    
+
     Circuit c{};
     c.create_node("p");
     c.create_node("n");
@@ -49,7 +53,7 @@ int main(int argc, char* argv[])
     c.insert_resistor("R4", 12, "l", "n");
     c.simulate(iterations, rows, time_step);
 
-   
+
     Circuit c2{};
     c2.create_node("p");
     c2.create_node("n");
@@ -63,8 +67,6 @@ int main(int argc, char* argv[])
     c2.insert_resistor("R4", 300, "l", "n");
     c2.insert_resistor("R5", 250, "r", "n");
     c2.simulate(iterations, rows, time_step);
-
-
 
     Circuit c3{};
     c3.create_node("p");

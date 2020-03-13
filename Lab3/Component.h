@@ -6,27 +6,23 @@
 
 //TODO: Att lagra en variabel "value" som inte har ett definierat
 //värde är dålig objektorientering. Skapa istället de variabler där de
-//behövs i subklasserna.
+//behövs i subklasserna. OK!
 
-//TODO: Ni ska använda override på överlagrade funktioner.
+//TODO: Ni ska använda override på överlagrade funktioner. OK!
 
-//TODO: Ni initierar inte charge vid skapad Capacitor.
+//TODO: Ni initierar inte charge vid skapad Capacitor. OK!
 
 class Component
 {
 public:
-    Component(std::string n, double data, Connection &first, Connection &last);
+    Component(std::string n, Connection &first, Connection &last);
     virtual ~Component() = default;
-    //Component(std::string n, double data);
     virtual double get_voltage() const;
     virtual double get_current() const = 0;
     virtual void tick(double const& time_period) = 0;
     std::string get_name() const;
-    virtual void set_nodes(Connection& node1, Connection& node2);
 protected:
     std::string name;
-    //Connection dummynode{};
-    double value;
     Connection &A;
     Connection &B;
 private:
@@ -36,39 +32,41 @@ private:
 class Resistor : public Component
 {
 public:
-    using Component::Component;
-    double get_current() const;
-    void tick(double const& time_period);
+    Resistor(std::string n, double data, Connection &first, Connection &last);
+    double get_current() const override;
+    void tick(double const& time_period) override;
 protected:
 
 private:
-
+    double resistance;
 };
 
 class Capacitor : public Component
 {
 public:
-    using Component::Component;
-    double get_current() const;
-    void tick(double const& time_period);
+    Capacitor(std::string n, double data, Connection &first, Connection &last);
+    double get_current() const override;
+    void tick(double const& time_period) override;
 protected:
 
 private:
-    double charge{};
+    double capacitance;
+    double charge;
 };
 
 
 class Battery : public Component
 {
 public:
-    using Component::Component;
+    Battery(std::string n, double data, Connection &first, Connection &last);
     double get_voltage() const override;
-    double get_current() const;
-    void tick(double const& time_period);
+    double get_current() const override;
+    void tick(double const& time_period) override;
 
 protected:
 
 private:
+    double voltage;
 };
 
 
